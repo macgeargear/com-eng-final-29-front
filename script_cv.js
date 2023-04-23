@@ -38,7 +38,7 @@ const getCompEngEssCid = async () => {
     .then((response) => response.json())
     .then((data) => {
       // console.log(data);
-      console.log(data.data["student"]);
+      // console.log(data.data["student"]);
       document.getElementById("ces-cid-value").innerHTML =
         data.data.student.find(
           (course) => course.course_no === "2110221"

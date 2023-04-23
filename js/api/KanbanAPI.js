@@ -134,7 +134,7 @@ async function getCourseAssignments(cv_cid) {
   return data;
 }
 
-async function read() {
+function read() {
   return [
     { id: 1, items: [{ id: 898055, content: "kjkjk" }] },
     {
