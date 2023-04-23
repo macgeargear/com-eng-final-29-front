@@ -54,6 +54,11 @@ section {
   padding: 10px;
 }
 
+.section-title {
+  margin: 12px;
+  padding: 10px;
+}
+
 .main-container {
   display: flex;
   flex-direction: column;

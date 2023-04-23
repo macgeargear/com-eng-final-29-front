@@ -1,6 +1,6 @@
 export default class KanbanAPI {
-  static async getItems(columnId) {
-    const column = await read().find((column) => column.id == columnId);
+  static getItems(columnId) {
+    const column = read().find((column) => column.id == columnId);
 
     if (!column) {
       return [];
@@ -9,8 +9,8 @@ export default class KanbanAPI {
     return column.items;
   }
 
-  static async insertItem(columnId, content) {
-    const data = await read();
+  static insertItem(columnId, content) {
+    const data = read();
     const column = data.find((column) => column.id == columnId);
     const item = {
       id: Math.floor(Math.random() * 1e6),
@@ -27,8 +27,8 @@ export default class KanbanAPI {
     return item;
   }
 
-  static async updateItem(itemId, newProps) {
-    const data = await read();
+  static updateItem(itemId, newProps) {
+    const data = read();
     const [item, currentColumn] = (() => {
       for (const column of data) {
         const item = column.items.find((item) => item.id == itemId);
@@ -66,8 +66,8 @@ export default class KanbanAPI {
     save(data);
   }
 
-  static async deleteItem(itemId) {
-    const data = await read();
+  static deleteItem(itemId) {
+    const data = read();
 
     for (const column of data) {
       const item = column.items.find((item) => item.id == itemId);
@@ -94,44 +94,58 @@ async function getCourseList() {
     .then((data) => {
       console.log(data.data.student);
       const course = data.data.student;
-      course.map((course) => {
+      course.map(async (course) => {
+        const data = await getCourseInfo(course.cv_cid);
+        // console.log(course);
+        // console.log(data);
         // ----------------- FILL IN YOUR CODE UNDER THIS AREA ONLY ----------------- //
-        console.log(course);
-        course_dropdown.innerHTML += `<option value="${course.cv_cid}">${course.cv_cid}</option>`;
+        course_dropdown.innerHTML += `<option value="${data.data.title}">${data.data.title}</option>`;
         // ----------------- FILL IN YOUR CODE ABOVE THIS AREA ONLY ----------------- //
       });
     })
     .catch((error) => console.error(error));
 }
 
+async function getCourseInfo(cv_cid) {
+  const options = {
+    method: "GET",
+    credentials: "include",
+  };
+  const res = await fetch(
+    `http://${backendIPAddress}/courseville/get_course_info/` + cv_cid,
+    options
+  );
+  const data = await res.json();
+  // console.log(data);
+  return data;
+}
+
+async function getCourseAssignments(cv_cid) {
+  const options = {
+    method: "GET",
+    credentials: "include",
+  };
+  const res = await fetch(
+    `http://${backendIPAddress}/courseville/get_course_assignments/` + cv_cid,
+    options
+  );
+  const data = await res.json();
+  // console.log(data);
+  return data;
+}
+
 async function read() {
-  // const json = localStorage.getItem("kanban-data");
-  // if (!json) {
-  //   return [
-  //     {
-  //       id: 1,
-  //       items: [],
-  //     },
-  //     {
-  //       id: 2,
-  //       items: [],
-  //     },
-  //     {
-  //       id: 3,
-  //       items: [],
-  //     },
-  //   ];
-  // }
-  // return JSON.parse(json);
-  const assignment = await fetch(
-    `http://${backendIPAddress}/courseville/get_course_assignments/32200`,
-    { method: "GET", credentials: "include" }
-  )
-    .then((res) => res.json())
-    .then(({ data }) => {
-      console.log(data);
-      return data;
-    });
+  return [
+    { id: 1, items: [{ id: 898055, content: "kjkjk" }] },
+    {
+      id: 2,
+      items: [
+        { id: 312189, content: "jkjkj" },
+        { id: 122445, content: "jkjkj" },
+      ],
+    },
+    { id: 3, items: [] },
+  ];
 }
 
 function save(data) {
