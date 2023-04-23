@@ -1,0 +1,212 @@
+@import url("https://fonts.googleapis.com/css2?family=Mitr:wght@200;400;600&display=swap");
+
+:root {
+  --standard-border-radius: 8px;
+}
+
+body {
+  font-family: "Mitr", sans-serif;
+}
+
+#app-name {
+  font-size: 2.2em;
+  font-weight: bold;
+  margin: 0;
+  text-align: center;
+}
+
+section {
+  margin: 20px 0;
+}
+.section-title {
+  font-size: 1.25em;
+  font-weight: bold;
+  margin: 10px 0;
+}
+.section-subtitle {
+  font-size: 1.1em;
+}
+.section-center {
+  text-align: center;
+}
+.section-credit {
+  text-align: center;
+  font-size: 1.1em;
+}
+.section-right {
+  text-align: right;
+}
+.section-left {
+  text-align: left;
+}
+
+.section-board {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 12px;
+  padding: 10px;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.description {
+  text-align: center;
+  color: rgb(0, 2, 107);
+}
+
+.info {
+  font-size: 1em;
+}
+
+.button {
+  border-radius: 8px;
+  padding: 5px 5px;
+  border: 1px solid #aaa;
+  background: white;
+  cursor: pointer;
+  font-family: "Mitr", sans-serif;
+  font-size: 1em;
+  text-align: center;
+  width: fit-content;
+}
+.button:hover {
+  background: rgb(255, 200, 105);
+  color: white;
+}
+.logout-button:hover {
+  background: rgb(204, 19, 19);
+  color: white;
+}
+.change-page-button:hover {
+  background: rgb(94, 127, 236);
+  color: white;
+}
+
+.main-table {
+  margin: 10px 0;
+  padding: 0;
+  width: 100%;
+  background: #eee;
+  border-radius: 8px;
+  box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.1);
+  border-collapse: collapse;
+  overflow: hidden;
+}
+.main-table > thead {
+  background: #555;
+  color: white;
+}
+.main-table > thead > tr > th {
+  text-align: left;
+}
+.main-table td,
+.main-table th {
+  padding: 5px 10px;
+  font-size: 1em;
+}
+.main-table input,
+.main-table select,
+#name-to-add {
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid #aaa;
+  font-family: "Mitr", sans-serif;
+  font-size: 1em;
+}
+.main-table button {
+  border-radius: 8px;
+  padding: 5px 10px;
+  border: 1px solid #aaa;
+  background: white;
+  width: 60px;
+  cursor: pointer;
+  font-family: "Mitr", sans-serif;
+  font-size: 1em;
+}
+.main-table button:hover {
+  background: rgb(255, 200, 105);
+  color: white;
+}
+
+#delete-button {
+  border-radius: 8px;
+  padding: 5px 10px;
+  border: 1px solid #aaa;
+  background: white;
+  width: 60px;
+  cursor: pointer;
+  font-family: "Mitr", sans-serif;
+  font-size: 1em;
+}
+#delete-button:hover {
+  background: rgb(255, 200, 105);
+  color: white;
+}
+
+/* kanban */
+
+.kanban {
+  display: flex;
+  padding: 30px;
+  width: 750px;
+  background: #009578;
+  border-radius: 5px;
+}
+
+.kanban * {
+  font-family: sans-serif;
+}
+
+.kanban__column {
+  flex: 1;
+}
+
+.kanban__column:not(:last-child) {
+  margin-right: 30px;
+}
+
+.kanban__column-title {
+  margin-bottom: 20px;
+  font-size: 30px;
+  color: white;
+  user-select: none;
+}
+
+.kanban__item-input {
+  padding: 10px 15px;
+  box-sizing: border-box;
+  background: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.kanban__dropzone {
+  height: 10px;
+  transition: background 0.15s, height 0.15s;
+}
+
+.kanban__dropzone--active {
+  height: 20px;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.kanban__add-item {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: white;
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

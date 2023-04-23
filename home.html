@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>MyCourseville API Home Page</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script_cv.js" defer></script>
+    <script src="./js/main.js" type="module"></script>
+  </head>
+  <body onload="getUserProfile();getCompEngEssCid();">
+    <div>
+      <section class="section-right">
+        <button class="button logout-button" onclick="logout()">Logout</button>
+      </section>
+      <section>
+        <header>
+          <h1 id="app-name">My CP Board <span id="group-id"></span></h1>
+        </header>
+      </section>
+      <!-- <section>
+                <h2 class="section-title">1. Profile Section</h2>
+                <p class="info"> Name-Surname (English) : <span id="eng-name-info"></span></br>
+                    Name-Surname (Thai) : <span id="thai-name-info"></span></p>
+            </section> -->
+      <!-- <section>
+                <h2 class="section-title">2. Get Computer Engineering Essential CV_cid</h2>
+                <p id="info"> The CV_cid value of Computer Engineering Essential subject is <span id="ces-cid-value"></span>.</p>
+            </section> -->
+      <!-- <section>
+                <h2 class="section-title">3. Get Computer Engineering Essential Assignments</h2>
+                <button class="button create-ces-assignment-table" onclick=createCompEngEssAssignmentTable()>Create table</button>
+                <table class="main-table">
+                    <thead>
+                        <tr id="main-table-head">
+                            <th>Id</th>
+                            <th>Title</th>
+                        </tr>
+                    </thead>
+                    <tbody id="main-table-body">
+                        <tr id=0>
+                            <td>...</td>
+                            <td>...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section> -->
+
+      <section class="section-header">
+        <header><h2 class="section-title">Select Your Course</h2></header>
+        <select id="name-to-add">
+          <option value="banana">Gear Banana</option>
+        </select>
+      </section>
+
+      <section class="section-board">
+        <div class="kanban">
+          <!-- <div class="kanban__column">
+                <div class="kanban__column-title">Not Started</div>
+                <div class="kanban__items">
+                    <div class="kanban__item-input" contenteditable>Wash the dishes</div>
+                </div>
+                <button class="kanban__add-item" type="button">+ Add</button>
+            </div> -->
+        </div>
+      </section>
+    </div>
+    <div class="section-credit">
+      &#169; 2110221 Computer Engineering Essentials (2022/2) &#169;
+    </div>
+  </body>
+</html>
