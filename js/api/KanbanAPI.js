@@ -89,7 +89,8 @@ async function getCourseList() {
     method: "GET",
     credentials: "include",
   };
-  const courseList = await fetch(`http://${backendIPAddress}/courseville/get_courses`, options)
+  const courseList = [];
+  await fetch(`http://${backendIPAddress}/courseville/get_courses`, options)
     .then((response) => response.json())
     .then((data) => {
       console.log(data.data.student);
@@ -99,21 +100,18 @@ async function getCourseList() {
         // console.log(course);
         // console.log(data);
         // ----------------- FILL IN YOUR CODE UNDER THIS AREA ONLY ----------------- //
-        // courseList.push({'title': data.data.title, 'year': parseInt(data.data.year), 'semester': parseInt(data.data.semester)});
+        await courseList.push({'title': data.data.title, 'year': parseInt(data.data.year), 'semester': parseInt(data.data.semester)});
         
-        return {'title': data.data.title, 'year': parseInt(data.data.year), 'semester': parseInt(data.data.semester)};
-
         // course_dropdown.innerHTML += `<option value="${data.data.title}">${data.data.title}</option>`;
         // ----------------- FILL IN YOUR CODE ABOVE THIS AREA ONLY ----------------- //
       });
     })
     .catch((error) => console.error(error));
-
+    
     // find max year
     const mx = courseList.reduce((prev, current) => {
       return (prev.year > current.year) ? prev : current;
     }, []);
-    console.log(courseList);
 
     // filter year
     courseList.filter((course)=>{
@@ -124,12 +122,13 @@ async function getCourseList() {
     const lastSemester = courseList.reduce((prev, current) => {
       return (prev.semester > current.semester) ? prev : current;
     }, []);
-
+    
     // filter semester
     courseList.filter((course)=>{
       return course.semester == lastSemester;
     })
-
+    console.log(courseList);
+    
     // show Dropdown
     courseList.map((course)=>{
       course_dropdown.innerHTML += `<option value="${course.title}">${course.title}</option>`;
