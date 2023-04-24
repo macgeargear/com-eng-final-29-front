@@ -89,51 +89,46 @@ async function getCourseList() {
     method: "GET",
     credentials: "include",
   };
-  const courseList = [];
-  await fetch(`http://${backendIPAddress}/courseville/get_courses`, options)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data.data.student);
-      const course = data.data.student;
-      course.map(async (course) => {
-        const data = await getCourseInfo(course.cv_cid);
-        // console.log(course);
-        // console.log(data);
-        // ----------------- FILL IN YOUR CODE UNDER THIS AREA ONLY ----------------- //
-        await courseList.push({'title': data.data.title, 'year': parseInt(data.data.year), 'semester': parseInt(data.data.semester)});
-        
-        // course_dropdown.innerHTML += `<option value="${data.data.title}">${data.data.title}</option>`;
-        // ----------------- FILL IN YOUR CODE ABOVE THIS AREA ONLY ----------------- //
-      });
-    })
-    .catch((error) => console.error(error));
-    
-    // find max year
-    const mx = courseList.reduce((prev, current) => {
-      return (prev.year > current.year) ? prev : current;
-    }, []);
+  let courseList = [];
+  let res = await fetch(
+    `http://${backendIPAddress}/courseville/get_courses`,
+    options
+  );
+  let data = (await res.json()).data.student;
+  // data.filter(course);
+  for (const info of data) {
+    let course_info = (await getCourseInfo(info.cv_cid)).data;
+    // console.log(course_info);
+    courseList.push({
+      year: course_info.year,
+      title: course_info.title,
+      semester: course_info.semester,
+    });
+  }
 
-    // filter year
-    courseList.filter((course)=>{
-      return course.year == mx;
-    })
-    
-    // find max semester
-    const lastSemester = courseList.reduce((prev, current) => {
-      return (prev.semester > current.semester) ? prev : current;
-    }, []);
-    
-    // filter semester
-    courseList.filter((course)=>{
-      return course.semester == lastSemester;
-    })
-    console.log(courseList);
-    
-    // show Dropdown
-    courseList.map((course)=>{
-      course_dropdown.innerHTML += `<option value="${course.title}">${course.title}</option>`;
-    })
-    
+  const lastYear = courseList.reduce((prev, curr) =>
+    prev.year > curr.year ? prev.year : curr.year
+  );
+
+  // filter year
+  courseList = courseList.filter((course) => {
+    return course.year == lastYear;
+  });
+
+  // find max semester
+  const lastSemester = courseList.reduce((prev, current) => {
+    return prev.semester > current.semester ? prev.semester : current.semester;
+  });
+
+  // filter semester
+  courseList = courseList.filter((course) => {
+    return course.semester == lastSemester;
+  });
+  // console.log(lastYear, lastSemester);
+
+  courseList.map((course) => {
+    course_dropdown.innerHTML += `<option value="${course.title}">${course.title}</option>`;
+  });
 }
 
 async function getCourseInfo(cv_cid) {
