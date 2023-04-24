@@ -164,7 +164,7 @@ section {
   display: flex;
   padding: 30px;
   width: 750px;
-  background: #009578;
+  background: hsl(323, 59%, 63%);
   border-radius: 5px;
 }
 
