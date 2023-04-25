@@ -21,15 +21,11 @@ export default class Column {
     this.elements.title.textContent = title;
     this.elements.items.appendChild(topDropZone);
 
-    this.elements.addItem.addEventListener("click", () => {
+    this.elements.addItem.addEventListener("click", async () => {
       // TODO: add item
-      const newItem = KanbanAPI.insertItem(id, "");
+      const newItem = await KanbanAPI.insertItem(id, "");
 
-      this.randerItem(newItem);
-    });
-
-    KanbanAPI.getItems(id).forEach((item) => {
-      this.randerItem(item);
+      this.renderItem(newItem);
     });
   }
 
@@ -46,10 +42,18 @@ export default class Column {
        `).children[0];
   }
 
-  randerItem(data) {
+  renderItem(data) {
     //TODO: create Item instance
     const item = new Item(data.id, data.content);
-
+    // console.log(item);
     this.elements.items.appendChild(item.elements.root);
+  }
+
+  async renderItems() {
+    const items = await KanbanAPI.getItems(this.elements.root.dataset.id);
+    // console.log(items);
+    items.forEach((item) => {
+      this.renderItem(item);
+    });
   }
 }

@@ -1,16 +1,18 @@
 export default class KanbanAPI {
-  static getItems(columnId) {
-    const column = read().find((column) => column.id == columnId);
-
-    if (!column) {
+  static async getItems(columnId) {
+    const column = await read();
+    // console.log(column);
+    const column_ = column.find((column) => column.id == columnId);
+    console.log(column_);
+    if (!column_) {
       return [];
     }
 
-    return column.items;
+    return column_.items;
   }
 
-  static insertItem(columnId, content) {
-    const data = read();
+  static async insertItem(columnId, content) {
+    const data = await read();
     const column = data.find((column) => column.id == columnId);
     const item = {
       id: Math.floor(Math.random() * 1e6),
@@ -27,8 +29,8 @@ export default class KanbanAPI {
     return item;
   }
 
-  static updateItem(itemId, newProps) {
-    const data = read();
+  static async updateItem(itemId, newProps) {
+    const data = await read();
     const [item, currentColumn] = (() => {
       for (const column of data) {
         const item = column.items.find((item) => item.id == itemId);
@@ -66,8 +68,8 @@ export default class KanbanAPI {
     save(data);
   }
 
-  static deleteItem(itemId) {
-    const data = read();
+  static async deleteItem(itemId) {
+    const data = await read();
 
     for (const column of data) {
       const item = column.items.find((item) => item.id == itemId);
@@ -82,7 +84,7 @@ export default class KanbanAPI {
 }
 
 async function getCourseList() {
-  const course_dropdown = document.getElementById("name-to-add");
+  const course_dropdown = document.getElementById("course-name");
   course_dropdown.innerHTML =
     "<option value='0'>-- Select Your Course --</option>";
   const options = {
@@ -103,6 +105,7 @@ async function getCourseList() {
       year: course_info.year,
       title: course_info.title,
       semester: course_info.semester,
+      cv_cid: course_info.cv_cid,
     });
   }
 
@@ -129,6 +132,9 @@ async function getCourseList() {
   courseList.map((course) => {
     course_dropdown.innerHTML += `<option value="${course.title}">${course.title}</option>`;
   });
+
+  // console.log(courseList);
+  return courseList;
 }
 
 async function getCourseInfo(cv_cid) {
@@ -159,18 +165,44 @@ async function getCourseAssignments(cv_cid) {
   return data;
 }
 
-function read() {
-  return [
-    { id: 1, items: [{ id: 898055, content: "kjkjk" }] },
-    {
-      id: 2,
-      items: [
-        { id: 312189, content: "jkjkj" },
-        { id: 122445, content: "jkjkj" },
-      ],
-    },
+async function read() {
+  const json = localStorage.getItem("kanban-data");
+  let currentBoard = [
+    { id: 1, items: [] },
+    { id: 2, items: [] },
     { id: 3, items: [] },
   ];
+  let currentAssignments = [];
+  let cv_cid;
+  let selected_course = showCourseAssignmentBoard();
+  let course = await getCourseList();
+  console.log(course);
+  // cv_cid = (await getCourseList()).filter(
+  //   (course) => (course.title = selected_course)
+  // ).cv_cid;
+  // console.log(selected_course);
+
+  let assignments = (await getCourseAssignments(32200)).data;
+  for (const assignment of assignments) {
+    currentAssignments.push({
+      id: assignment.itemid,
+      content: assignment.title,
+    });
+  }
+
+  // console.log(currentAssignments);
+  currentBoard[0].items.push(...currentAssignments);
+  // return [
+  //   { id: 1, items: [] },
+  //   {
+  //     id: 2,
+  //     items: [],
+  //   },
+  //   { id: 3, items: [] },
+  // ];
+  // console.log(currentBoard);
+  if (!json) return currentBoard;
+  return JSON.parse(json);
 }
 
 function save(data) {
@@ -179,4 +211,17 @@ function save(data) {
 
 document.addEventListener("DOMContentLoaded", async function (event) {
   await getCourseList();
+  showCourseAssignmentBoard();
 });
+
+function showCourseAssignmentBoard() {
+  const btn = document.getElementById("select-course");
+  const courseLists = document.getElementById("course-name");
+  let selected;
+  btn.addEventListener("click", () => {
+    // let collection = courseLists.selecedOptions;
+    console.log(courseLists.value);
+    selected = courseLists.value;
+  });
+  return selected;
+}

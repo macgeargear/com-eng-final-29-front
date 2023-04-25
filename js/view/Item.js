@@ -25,8 +25,8 @@ export default class Item {
         content: this.content,
       });
 
-      console.log(this.content);
-      console.log(newContent);
+      // console.log(this.content);
+      // console.log(newContent);
     };
 
     this.elements.input.addEventListener("blur", onBlur);
@@ -37,6 +37,11 @@ export default class Item {
         this.elements.input.removeEventListener("blur", onBlur);
         this.elements.root.parentElement.removeChild(this.elements.root);
       }
+    });
+
+    // test adding modal
+    this.elements.root.addEventListener("click", (e) => {
+      console.log(e.target.innerHTML);
     });
 
     this.elements.root.addEventListener("dragstart", (e) => {
@@ -55,7 +60,9 @@ export default class Item {
 
     return range.createContextualFragment(`
         <div class="kanban__item" draggable="true">
-            <div class="kanban__item-input" contenteditable></div>
+          <div class="kanban__item-input" contenteditable id="open-modal"></div>
+          </div>
+          </div>
         </div>
     `).children[0];
   }

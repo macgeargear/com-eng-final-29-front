@@ -4,62 +4,50 @@
     <meta charset="UTF-8" />
     <title>MyCourseville API Home Page</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <script src="script_cv.js" defer></script>
     <script src="./js/main.js" type="module"></script>
   </head>
   <body onload="getUserProfile();getCompEngEssCid();">
-    <div>
-      <section class="section-right">
-        <button class="button logout-button" onclick="logout()">Logout</button>
-      </section>
+    <section class="section-right">
+      <button class="button logout-button" onclick="logout()">Logout</button>
+    </section>
+    <section>
+      <header>
+        <h1 id="app-name">My CP Board <span id="group-id"></span></h1>
+      </header>
+    </section>
+
+    <section class="section-header">
+      <header><h2 class="section-title">Select Your Course</h2></header>
+      <select id="course-name">
+        <option value="banana">Gear Banana</option>
+      </select>
+      <button class="button" id="select-course">Select Course</button>
+    </section>
+
+    <div class="assignment-container">
+      <div>
+        <h1 class="title">waiting list</h1>
+        <div class="assignments-list">
+          <div id="assignment-item">hello</div>
+          <div id="assignment-item">this</div>
+          <div id="assignment-item">is</div>
+          <div id="assignment-item">non-status</div>
+          <div id="assignment-item">assignments-status</div>
+        </div>
+      </div>
       <section>
-        <header>
-          <h1 id="app-name">My CP Board <span id="group-id"></span></h1>
-        </header>
-      </section>
-      <!-- <section>
-                <h2 class="section-title">1. Profile Section</h2>
-                <p class="info"> Name-Surname (English) : <span id="eng-name-info"></span></br>
-                    Name-Surname (Thai) : <span id="thai-name-info"></span></p>
-            </section> -->
-      <!-- <section>
-                <h2 class="section-title">2. Get Computer Engineering Essential CV_cid</h2>
-                <p id="info"> The CV_cid value of Computer Engineering Essential subject is <span id="ces-cid-value"></span>.</p>
-            </section> -->
-      <!-- <section>
-                <h2 class="section-title">3. Get Computer Engineering Essential Assignments</h2>
-                <button class="button create-ces-assignment-table" onclick=createCompEngEssAssignmentTable()>Create table</button>
-                <table class="main-table">
-                    <thead>
-                        <tr id="main-table-head">
-                            <th>Id</th>
-                            <th>Title</th>
-                        </tr>
-                    </thead>
-                    <tbody id="main-table-body">
-                        <tr id=0>
-                            <td>...</td>
-                            <td>...</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section> -->
-
-      <section class="section-header">
-        <header><h2 class="section-title">Select Your Course</h2></header>
-        <select id="name-to-add">
-          <option value="banana">Gear Banana</option>
-        </select>
-      </section>
-
-      <section class="section-board">
+        <h1 class="title">My board</h1>
         <div class="kanban">
-          <!-- <div class="kanban__column">
-                <div class="kanban__column-title">Not Started</div>
-                <div class="kanban__items">
-                    <div class="kanban__item-input" contenteditable>Wash the dishes</div>
-                </div>
-                <button class="kanban__add-item" type="button">+ Add</button>
+          <!--
+            <div class="kanban__column">
+              <div class="kanban__column-title">Not Started</div>
+              <div class="kanban__items">
+                <div class="kanban__item-input" contenteditable>Wash the dishes</div>
+              </div>
+              <button class="kanban__add-item" type="button">+ Add</button>
             </div>
           -->
         </div>

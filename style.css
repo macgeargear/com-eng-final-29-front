@@ -1,11 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Mitr:wght@200;400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;1,300;1,400;1,500&display=swap");
 
 :root {
   --standard-border-radius: 8px;
 }
 
 body {
-  font-family: "Mitr", sans-serif;
+  font-family: "JetBrains Mono", sans-serif;
 }
 
 #app-name {
@@ -74,6 +74,7 @@ section {
 }
 
 .button {
+  margin: 8px;
   border-radius: 8px;
   padding: 5px 5px;
   border: 1px solid #aaa;
@@ -97,67 +98,6 @@ section {
   color: white;
 }
 
-.main-table {
-  margin: 10px 0;
-  padding: 0;
-  width: 100%;
-  background: #eee;
-  border-radius: 8px;
-  box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.1);
-  border-collapse: collapse;
-  overflow: hidden;
-}
-.main-table > thead {
-  background: #555;
-  color: white;
-}
-.main-table > thead > tr > th {
-  text-align: left;
-}
-.main-table td,
-.main-table th {
-  padding: 5px 10px;
-  font-size: 1em;
-}
-.main-table input,
-.main-table select,
-#name-to-add {
-  padding: 5px 10px;
-  border-radius: 8px;
-  border: 1px solid #aaa;
-  font-family: "Mitr", sans-serif;
-  font-size: 1em;
-}
-.main-table button {
-  border-radius: 8px;
-  padding: 5px 10px;
-  border: 1px solid #aaa;
-  background: white;
-  width: 60px;
-  cursor: pointer;
-  font-family: "Mitr", sans-serif;
-  font-size: 1em;
-}
-.main-table button:hover {
-  background: rgb(255, 200, 105);
-  color: white;
-}
-
-#delete-button {
-  border-radius: 8px;
-  padding: 5px 10px;
-  border: 1px solid #aaa;
-  background: white;
-  width: 60px;
-  cursor: pointer;
-  font-family: "Mitr", sans-serif;
-  font-size: 1em;
-}
-#delete-button:hover {
-  background: rgb(255, 200, 105);
-  color: white;
-}
-
 /* kanban */
 
 .kanban {
@@ -165,7 +105,7 @@ section {
   padding: 30px;
   width: 750px;
   background: hsl(323, 59%, 63%);
-  border-radius: 5px;
+  border-radius: 8px;
 }
 
 .kanban * {
@@ -191,7 +131,7 @@ section {
   padding: 10px 15px;
   box-sizing: border-box;
   background: white;
-  border-radius: 5px;
+  border-radius: 12px;
   cursor: pointer;
 }
 
@@ -212,6 +152,61 @@ section {
   color: white;
   background: rgba(0, 0, 0, 0.1);
   border: none;
-  border-radius: 5px;
+  border-radius: 12px;
   cursor: pointer;
+}
+
+#course-name {
+  padding: 12px;
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.assignment-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.assignments-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+
+  margin: 10px;
+  padding: 20px;
+  background: #6a5252;
+  border-radius: 8px;
+}
+
+@media (max-width: 600px) {
+  .assignments-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+}
+
+@media (min-width: 1000px) {
+  .assignments-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+  }
+}
+
+#assignment-item {
+  padding: 12px;
+  background: #aeaaaa;
+  margin: 12px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.title {
+  text-align: center;
 }
