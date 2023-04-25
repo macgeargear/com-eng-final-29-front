@@ -9,21 +9,19 @@
     <script src="script_cv.js" defer></script>
     <script src="./js/main.js" type="module"></script>
   </head>
-  <body onload="getUserProfile();getCompEngEssCid();">
+  <body>
     <section class="section-right">
       <button class="button logout-button" onclick="logout()">Logout</button>
     </section>
     <section>
       <header>
-        <h1 id="app-name">My CP Board <span id="group-id"></span></h1>
+        <h1 id="app-name">Progress Board <span id="group-id"></span></h1>
       </header>
     </section>
 
     <section class="section-header">
       <header><h2 class="section-title">Select Your Course</h2></header>
-      <select id="course-name">
-        <option value="banana">Gear Banana</option>
-      </select>
+      <select id="course-name"></select>
       <button class="button" id="select-course">Select Course</button>
     </section>
 

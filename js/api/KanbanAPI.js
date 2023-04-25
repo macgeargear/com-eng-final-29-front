@@ -1,7 +1,17 @@
 export default class KanbanAPI {
   static async getItems(columnId) {
-    const column = await read();
+    // if (this.click) {
+    //   const column = await read();
+    //   const column_ = column.find((column) => column.id == columnId);
+    //   console.log(column_);
+    //   if (!column_) {
+    //     return [];
+    //   }
+
+    //   return column_.items;
+    // }
     // console.log(column);
+    const column = await read();
     const column_ = column.find((column) => column.id == columnId);
     console.log(column_);
     if (!column_) {
@@ -83,10 +93,9 @@ export default class KanbanAPI {
   }
 }
 
+let courseDropdown;
+
 async function getCourseList() {
-  const course_dropdown = document.getElementById("course-name");
-  course_dropdown.innerHTML =
-    "<option value='0'>-- Select Your Course --</option>";
   const options = {
     method: "GET",
     credentials: "include",
@@ -99,13 +108,13 @@ async function getCourseList() {
   let data = (await res.json()).data.student;
   // data.filter(course);
   for (const info of data) {
-    let course_info = (await getCourseInfo(info.cv_cid)).data;
+    let course_info = await getCourseInfo(info.cv_cid);
     // console.log(course_info);
     courseList.push({
-      year: course_info.year,
-      title: course_info.title,
-      semester: course_info.semester,
-      cv_cid: course_info.cv_cid,
+      year: course_info.data.year,
+      title: course_info.data.title,
+      semester: course_info.data.semester,
+      cv_cid: course_info.data.cv_cid,
     });
   }
 
@@ -128,13 +137,24 @@ async function getCourseList() {
     return course.semester == lastSemester;
   });
   // console.log(lastYear, lastSemester);
-
-  courseList.map((course) => {
-    course_dropdown.innerHTML += `<option value="${course.title}">${course.title}</option>`;
-  });
+  // courseDropdown = courseList;
+  // courseList.map((course) => {
+  //   course_dropdown.innerHTML += `<option value="${course.title}">${course.title}</option>`;
+  // });
 
   // console.log(courseList);
   return courseList;
+  // return courseDropdown;
+}
+
+async function addCourseToDropDown() {
+  courseDropdown = await getCourseList();
+  const course_dropdown = document.getElementById("course-name");
+  course_dropdown.innerHTML =
+    "<option value='0'>-- Select Your Course --</option>";
+  courseDropdown.map((course) => {
+    course_dropdown.innerHTML += `<option value="${course.title}">${course.title}</option>`;
+  });
 }
 
 async function getCourseInfo(cv_cid) {
@@ -166,24 +186,17 @@ async function getCourseAssignments(cv_cid) {
 }
 
 async function read() {
-  const json = localStorage.getItem("kanban-data");
+  // const json = localStorage.getItem("kanban-data");
+  const json = false;
   let currentBoard = [
     { id: 1, items: [] },
     { id: 2, items: [] },
     { id: 3, items: [] },
   ];
   let currentAssignments = [];
-  let cv_cid;
-  let selected_course = showCourseAssignmentBoard();
-  let course = await getCourseList();
-  console.log(course);
-  // cv_cid = (await getCourseList()).filter(
-  //   (course) => (course.title = selected_course)
-  // ).cv_cid;
-  // console.log(selected_course);
 
-  let assignments = (await getCourseAssignments(32200)).data;
-  for (const assignment of assignments) {
+  let assignments = await getCourseAssignments(32200);
+  for (const assignment of assignments.data) {
     currentAssignments.push({
       id: assignment.itemid,
       content: assignment.title,
@@ -194,10 +207,7 @@ async function read() {
   currentBoard[0].items.push(...currentAssignments);
   // return [
   //   { id: 1, items: [] },
-  //   {
-  //     id: 2,
-  //     items: [],
-  //   },
+  //   { id: 2, items: [] },
   //   { id: 3, items: [] },
   // ];
   // console.log(currentBoard);
@@ -210,18 +220,50 @@ function save(data) {
 }
 
 document.addEventListener("DOMContentLoaded", async function (event) {
-  await getCourseList();
-  showCourseAssignmentBoard();
+  await addCourseToDropDown();
+  // await getCourseList();
+  await read();
+  // await kanban.renderColumns();
 });
 
-function showCourseAssignmentBoard() {
-  const btn = document.getElementById("select-course");
-  const courseLists = document.getElementById("course-name");
-  let selected;
-  btn.addEventListener("click", () => {
-    // let collection = courseLists.selecedOptions;
-    console.log(courseLists.value);
-    selected = courseLists.value;
-  });
-  return selected;
-}
+const redrawDOM = () => {
+  window.document.dispatchEvent(
+    new Event("DOMContentLoaded", {
+      bubbles: true,
+      cancelable: true,
+    })
+  );
+};
+
+const btn = document.getElementById("select-course");
+btn.addEventListener("click", async () => {
+  const selected = document.getElementById("course-name");
+  console.log(selected.options[selected.selectedIndex].value);
+  let courses = await getCourseList();
+  console.log(courses);
+  let id = courses.find(
+    (course) => course.title === selected.options[selected.selectedIndex].value
+  );
+  console.log(id.cv_cid);
+
+  let assignments = await getCourseAssignments(id.cv_cid);
+  let currentAssignments = [];
+  for (const assignment of assignments.data) {
+    currentAssignments.push({
+      id: assignment.itemid,
+      content: assignment.title,
+    });
+  }
+
+  // console.log(currentAssignments);
+  let currentBoard = [
+    { id: 1, items: [] },
+    { id: 2, items: [] },
+    { id: 3, items: [] },
+  ];
+  currentBoard[0].items.push(...currentAssignments);
+  console.log(currentAssignments);
+  console.log(currentBoard);
+  KanbanAPI.getItems();
+  redrawDOM();
+});

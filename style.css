@@ -133,6 +133,9 @@ section {
   background: white;
   border-radius: 12px;
   cursor: pointer;
+  border: 2px solid #de4db3;
+  padding: 10px;
+  box-shadow: 6px 4px #de4db3;
 }
 
 .kanban__dropzone {
@@ -154,6 +157,9 @@ section {
   border: none;
   border-radius: 12px;
   cursor: pointer;
+  border: 2px solid #b20d7b;
+  padding: 10px;
+  box-shadow: 6px 4px #b20d7b;
 }
 
 #course-name {
