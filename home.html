@@ -3,43 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <title>MyCourseville API Home Page</title>
+    <link rel="stylesheet" href="./reset.css" />
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <script src="script_cv.js" defer></script>
-    <script src="./js/main.js" type="module"></script>
+    <script src="./script_cv.js" defer></script>
+    <script src="./js/main.js" type="module" defer></script>
   </head>
   <body>
-    <section class="section-right">
-      <button class="button logout-button" onclick="logout()">Logout</button>
-    </section>
-    <section>
-      <header>
+    <header class="menu-bar-wrapper">
+      <div class="menu-bar container">
         <h1 id="app-name">Progress Board <span id="group-id"></span></h1>
-      </header>
-    </section>
-
-    <section class="section-header">
-      <header><h2 class="section-title">Select Your Course</h2></header>
-      <select id="course-name"></select>
-      <button class="button" id="select-course">Select Course</button>
-    </section>
-
-    <div class="assignment-container">
-      <div>
-        <h1 class="title">waiting list</h1>
-        <div class="assignments-list">
-          <div id="assignment-item">hello</div>
-          <div id="assignment-item">this</div>
-          <div id="assignment-item">is</div>
-          <div id="assignment-item">non-status</div>
-          <div id="assignment-item">assignments-status</div>
-        </div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="/" class="nav-link">About</a>
+          </li>
+          <li class="nav-item"><a href="/" class="nav-link">Help</a></li>
+          <li class="nav-item">
+            <button class="button logout-button" onclick="logout()">
+              Logout
+            </button>
+          </li>
+        </ul>
       </div>
-      <section>
-        <h1 class="title">My board</h1>
-        <div class="kanban">
-          <!--
+    </header>
+
+    <main>
+      <div class="select-container">
+        <h2 class="">Select Your Course</h2>
+        <select id="course-name"></select>
+        <button class="button" id="select-course">Select Course</button>
+      </div>
+
+      <div class="assignment-container">
+        <section>
+          <h1 class="title">My board</h1>
+          <div class="kanban">
+            <!--
             <div class="kanban__column">
               <div class="kanban__column-title">Not Started</div>
               <div class="kanban__items">
@@ -47,12 +47,12 @@
               </div>
               <button class="kanban__add-item" type="button">+ Add</button>
             </div>
-          -->
-        </div>
-      </section>
-    </div>
-    <div class="section-credit">
+          --></div>
+        </section>
+      </div>
+      <!-- <div class="section-credit">
       &#169; 2110221 Computer Engineering Essentials (2022/2) &#169;
-    </div>
+    </div> -->
+    </main>
   </body>
 </html>

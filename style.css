@@ -8,55 +8,66 @@ body {
   font-family: "JetBrains Mono", sans-serif;
 }
 
+.container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/*---- Menu ----*/
+.menu-bar-wrapper {
+  padding: 20px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  z-index: 999;
+}
+
+.menu-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 72px;
+}
+
+.logo {
+  height: 20px;
+}
+.nav-list {
+  display: flex;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-item:not(:first-child) {
+  margin-left: 24px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: black;
+}
+
+.nav-link:hover {
+  color: #f87060;
+}
+
+.nav-link:active {
+  opacity: 0.5;
+}
+
 #app-name {
   font-size: 2.2em;
   font-weight: bold;
   margin: 0;
   text-align: center;
-}
-
-section {
-  margin: 20px 0;
-}
-.section-title {
-  font-size: 1.25em;
-  font-weight: bold;
-  margin: 10px 0;
-}
-.section-subtitle {
-  font-size: 1.1em;
-}
-.section-center {
-  text-align: center;
-}
-.section-credit {
-  text-align: center;
-  font-size: 1.1em;
-}
-.section-right {
-  text-align: right;
-}
-.section-left {
-  text-align: left;
-}
-
-.section-board {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.section-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 12px;
-  padding: 10px;
-}
-
-.section-title {
-  margin: 12px;
-  padding: 10px;
 }
 
 .main-container {
@@ -73,29 +84,38 @@ section {
   font-size: 1em;
 }
 
-.button {
-  margin: 8px;
-  border-radius: 8px;
-  padding: 5px 5px;
-  border: 1px solid #aaa;
-  background: white;
+button {
+  padding: 10px 20px;
+  margin: 10px 10px;
   cursor: pointer;
-  font-family: "Mitr", sans-serif;
-  font-size: 1em;
-  text-align: center;
-  width: fit-content;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
 }
-.button:hover {
-  background: rgb(255, 200, 105);
-  color: white;
-}
+
+/* Use a limited color palette with bold accents */
 .logout-button:hover {
-  background: rgb(204, 19, 19);
-  color: white;
+  background-color: rgb(204, 19, 19);
+  color: #fff;
+  transition: all 0.2s ease-in-out;
 }
-.change-page-button:hover {
-  background: rgb(94, 127, 236);
-  color: white;
+
+/* ----- Container ------ */
+.select-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 60px 0;
+}
+
+select {
+  box-shadow: 0 10px 250x rgba(0, 0, 0, 0.25);
+  outline: none;
+  background: #f3efef;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
 }
 
 /* kanban */
@@ -105,7 +125,7 @@ section {
   padding: 30px;
   width: 750px;
   background: hsl(323, 59%, 63%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .kanban * {
@@ -162,15 +182,6 @@ section {
   box-shadow: 6px 4px #b20d7b;
 }
 
-#course-name {
-  padding: 12px;
-  border-radius: 8px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .assignment-container {
   display: flex;
   justify-content: center;
@@ -189,22 +200,6 @@ section {
   border-radius: 8px;
 }
 
-@media (max-width: 600px) {
-  .assignments-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-  }
-}
-
-@media (min-width: 1000px) {
-  .assignments-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto;
-  }
-}
-
 #assignment-item {
   padding: 12px;
   background: #aeaaaa;
@@ -213,6 +208,19 @@ section {
   cursor: pointer;
 }
 
-.title {
+/* text */
+
+h1 {
   text-align: center;
+  font-size: xx-large;
+  margin-bottom: 16px;
+  /* text-decoration-line: underline; */
+  text-decoration-line: underline;
+  text-decoration-color: pink;
+}
+
+h2 {
+  text-align: center;
+  font-size: large;
+  margin: 10px;
 }
