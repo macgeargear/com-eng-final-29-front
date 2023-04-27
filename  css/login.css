@@ -1,0 +1,119 @@
+/* Use a minimalist design approach with plenty of white space */
+body {
+  background-color: #fff;
+  color: #333;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  display: table;
+  margin: auto;
+}
+
+body {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+}
+
+/* Use a limited color palette with bold accents */
+.login-button {
+  background-color: #e94abe;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
+}
+
+.login-button:hover {
+  background-color: #9c2a85;
+}
+
+.about-button {
+  background: rgb(223, 247, 240);
+  border: none;
+}
+
+.about-button:hover {
+  transition: all 0.2s ease-in-out;
+  background: #e94abe;
+}
+
+.section-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Utilize typography to make a statement, with large and clean fonts */
+h1,
+h2 {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 0;
+  text-align: center;
+}
+
+h1#app-name {
+  margin-bottom: 10px;
+}
+
+p.section-subtitle {
+  text-align: center;
+  font-size: 18px;
+  color: darkgrey;
+}
+
+/* Use smooth transitions and animations to create an interactive and engaging experience */
+button,
+a {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Implement responsive design to ensure the page looks good on all devices */
+@media (max-width: 768px) {
+  h1,
+  h2 {
+    font-size: 24px;
+  }
+
+  p.section-subtitle {
+    font-size: 16px;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}
+
+/* Use icons and images to enhance the user experience */
+.section-credit::before {
+  content: url("./images/copyright.png");
+  display: inline-block;
+  margin-right: 5px;
+  /* vertical-align: middle; */
+  /* text-align: center; */
+}
+
+.section-credit {
+  font-size: 12px;
+  text-align: center;
+  bottom: 0px;
+}
