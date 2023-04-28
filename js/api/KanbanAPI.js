@@ -255,7 +255,7 @@ function clearItem() {
   for (let i = 0; i < parentElement.length; ++i) {
     const allChild = parentElement[i].getElementsByClassName("kanban__item");
     for (let j = allChild.length - 1; j >= 0; --j) {
-      parentElement[0].removeChild(allChild[j]);
+      parentElement[i].removeChild(allChild[j]);
     }
   }
 }
@@ -269,7 +269,8 @@ function addRowInColumn(parentElement, id, content){
   //   </div>`
   // ).children[0];
   const child = new Item(id, content);
-  parentElement.appendChild(child); 
+  console.log(child.elements.content, id);
+  parentElement.appendChild(child.elements.root); 
 }
 
 function addItemColumn(data) {
@@ -331,10 +332,12 @@ btn.addEventListener("click", async () => {
   // console.log(id.cv_cid);
 
   let assignments = await getCourseAssignments(id.cv_cid);
-  const parentElement = document.getElementsByClassName("kanban__column-items");
+  console.log(document.querySelectorAll(".kanban__column-items"));
+  const parentElement = document.querySelectorAll(".kanban__column-items"); 
+  // const parentElement = document.getElementsByClassName("kanban__column-items");
   let currentAssignments = [];
   for (const assignment of assignments.data) {
-    const id = assignment.itemId;
+    const id = assignment.itemid;
     const content = assignment.title;
     // currentAssignments.push({
     //   id: assignment.itemid,
