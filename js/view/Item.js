@@ -12,6 +12,7 @@ export default class Item {
     this.elements.closeModal = this.elements.root.querySelector(`.close`);
     this.elements.modal = this.elements.root.querySelector(`.modal`);
     this.elements.modalContent = this.elements.root.querySelector(`.modal-content`);
+    this.elements.modalTitle = this.elements.root.querySelector(`.modal-title`);
 
     this.elements.root.dataset.id = id;
     this.elements.input.textContent = content;
@@ -19,9 +20,10 @@ export default class Item {
     this.elements.root.appendChild(bottomDropZone);
     this.elements.input.setAttribute("id", `open-modal-${this.id}`);
     this.elements.modal.setAttribute("id", `modal-${this.id}`);
-    this.elements.modal.setAttribute("id", `modal-content-${this.id}`);
+    this.elements.modalContent.setAttribute("id", `modal-content-${this.id}`);
     this.elements.closeModal.setAttribute("id", `close-modal-${this.id}`);
-    this.elements.modalContent.textContent = content;
+    this.elements.modalTitle.textContent = content;
+    this.elements.closeModal.textContent = `x`;
 
     const onBlur = () => {
       const newContent = this.elements.input.textContent.trim();
@@ -32,9 +34,6 @@ export default class Item {
       KanbanAPI.updateItem(id, {
         content: this.content,
       });
-
-      // console.log(this.content);
-      // console.log(newContent);
     };
 
     this.elements.input.addEventListener("blur", onBlur);
@@ -50,16 +49,12 @@ export default class Item {
     // modal
     // open
     this.elements.input.addEventListener("click", () => {
-      const thisModal = document.getElementById(`modal-${this.id}`);
-      console.log(thisModal);
-      thisModal.style.display = "block";
+      this.elements.modal.style.display = "block";
     })
 
     // close
     this.elements.closeModal.addEventListener("click", () => {
-      const thisModal = document.getElementById(`modal-${this.id}`);
-      console.log(thisModal);
-      thisModal.style.display = "none";
+      this.elements.modal.style.display = "none";
     })
 
     this.elements.root.addEventListener("dragstart", (e) => {
@@ -80,8 +75,8 @@ export default class Item {
         <div class="kanban__item" draggable="true">
           <div class="modal">
             <div class="modal-content">
-              <div class="close">&times;</div>
-              <p class"modal-content"></p>
+              <span class="close"></span>
+              <div class="modal-title"></div>
             </div>
           </div>
           <div class="kanban__item-input"></div>
