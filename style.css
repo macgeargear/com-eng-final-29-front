@@ -35,6 +35,7 @@ body {
 .logo {
   height: 20px;
 }
+
 .nav-list {
   display: flex;
 }
@@ -94,6 +95,11 @@ button {
   border: none;
 }
 
+.select-button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
+}
+
 /* Use a limited color palette with bold accents */
 .logout-button:hover {
   background-color: rgb(204, 19, 19);
@@ -124,7 +130,8 @@ select {
   display: flex;
   padding: 30px;
   width: 750px;
-  background: hsl(323, 59%, 63%);
+  background: #FF597B;
+  /* background: hsl(323, 59%, 63%); */
   border-radius: 20px;
 }
 
@@ -134,17 +141,23 @@ select {
 
 .kanban__column {
   flex: 1;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
-.kanban__column:not(:last-child) {
-  margin-right: 30px;
-}
+/* .kanban__column:not(:last-child) {
+  padding-left: 30px;
+  padding-right: 30px;
+} */
 
 .kanban__column-title {
   margin-bottom: 20px;
   font-size: 30px;
   color: white;
   user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .kanban__item-input {
@@ -173,13 +186,20 @@ select {
   padding: 10px 0;
   font-size: 16px;
   color: white;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0);
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  border: 2px solid #b20d7b;
-  padding: 10px;
-  box-shadow: 6px 4px #b20d7b;
+  border: 2px solid #B3005E;
+  /* border: 2px solid #b20d7b; */
+  /* padding: 10px; */
+  margin: 0;
+  box-shadow: 6px 4px #B3005E;
+}
+
+.kanban__add-item:hover {
+  background: rgba(0, 0, 0, 0.1);
+  transition: all 0.15s, height 0.15s;
 }
 
 .assignment-container {
@@ -193,7 +213,6 @@ select {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: auto;
-
   margin: 10px;
   padding: 20px;
   background: #6a5252;
@@ -213,10 +232,11 @@ select {
 h1 {
   text-align: center;
   font-size: xx-large;
+  font-weight: bold;
   margin-bottom: 16px;
   /* text-decoration-line: underline; */
-  text-decoration-line: underline;
-  text-decoration-color: pink;
+  /* text-decoration-line: underline;
+  text-decoration-color: pink; */
 }
 
 h2 {
@@ -269,4 +289,13 @@ h2 {
 
 .member-card span {
   font-weight: bold;
+}
+
+#course-name {
+  cursor: pointer;
+}
+
+#course-name:hover {
+  background-color: rgb(0,0,0,0.1);
+  transition: all 0.2s ease-in-out;
 }
