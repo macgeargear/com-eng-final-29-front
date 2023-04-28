@@ -216,19 +216,17 @@ function clearItem() {
   }
 }
 
-
-function addRowInColumn(parentElement, id, content){
-  const child = new Item(id, content);
-  parentElement.appendChild(child.elements.root); 
-}
-
-
 function addRowInColumn(parentElement, id, content) {
-  console.log(id);
   const child = new Item(id, content);
-  console.log(child.elements.content, id);
   parentElement.appendChild(child.elements.root);
 }
+
+// function addRowInColumn(parentElement, id, content) {
+//   console.log(id);
+//   const child = new Item(id, content);
+//   console.log(child.elements.content, id);
+//   parentElement.appendChild(child.elements.root);
+// }
 
 function addItemColumn(data) {
   const parentElement = document.getElementsByClassName("kanban__column-items"); // replace "parent-element" with the ID of the element you want to clear
@@ -243,7 +241,6 @@ function addItemColumn(data) {
     }
   }
 }
-
 
 async function getAssignmentById(assignmentCode) {
   const options = {
@@ -284,18 +281,21 @@ btn.addEventListener("click", async () => {
 
   let assignments = await getCourseAssignments(id.cv_cid);
 
-  const parentElement = document.querySelectorAll(".kanban__column-items"); 
+  const parentElement = document.querySelectorAll(".kanban__column-items");
 
   let currentAssignments = [];
   for (const assignment of assignments.data) {
     const id = assignment.itemid;
     const content = assignment.title;
 
-    const assignmentCode = [userId, String(cvcid), String(id)].join('-');
+    const assignmentCode = [userId, String(cvcid), String(id)].join("-");
     const data = await getAssignmentById(assignmentCode);
-    if (data.message == 'ok') {
-      addRowInColumn(parentElement[Number(data.status)], assignmentCode, content);
-
+    if (data.message == "ok") {
+      addRowInColumn(
+        parentElement[Number(data.status)],
+        assignmentCode,
+        content
+      );
     } else {
       const data = {
         assignmentCode: assignmentCode,
