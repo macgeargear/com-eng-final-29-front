@@ -93,6 +93,18 @@ export default class KanbanAPI {
   }
 }
 
+const getUserProfile = async () => {
+  const options = {
+    method: "GET",
+    credentials: "include",
+  };
+  return await fetch(
+    `http://${backendIPAddress}/courseville/get_profile_info`,
+    options
+  )
+    .then((response) => response.json());
+};
+
 let courseDropdown;
 
 async function getCourseList() {
@@ -235,16 +247,74 @@ const redrawDOM = () => {
   );
 };
 
+function clearItem() {
+  const parentElement = document.getElementsByClassName("kanban__column-items"); // replace "parent-element" with the ID of the element you want to clear
+  // const 
+  for (let i = 0; i < parentElement.length; ++i) {
+    const allChild = parentElement[i].getElementsByClassName("kanban__item");
+    for (let j = allChild.length - 1; j >= 0; --j) {
+      parentElement[0].removeChild(allChild[j]);
+    }
+  }
+}
+
+function addItemColumn(data) {
+  const parentElement = document.getElementsByClassName("kanban__column-items"); // replace "parent-element" with the ID of the element you want to clear
+  // const 
+  for(let i=0;i<3;++i){
+    for(let j=0;j<data[i].items.length;++j){
+      const child = document.createRange().createContextualFragment(`
+      <div class="kanban__item" draggable="true">
+        <div class="kanban__item-input" contenteditable id="open-modal">${data[i].items[j].content}</div>
+      </div>`
+      ).children[0];
+      parentElement[i].appendChild(child);
+    }
+  }
+}
+
+async function getAssignmentById(assignmentCode) {
+  const options = {
+    method: "GET",
+    credentials: "include",
+  };
+  const res = await fetch(
+    `http://${backendIPAddress}/assignment/${assignmentCode}`,
+    options
+  );
+  const data = await res.json();
+  return data;
+}
+
+async function postAssignment(data) {
+  const options = {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data), // body
+  };
+  await fetch(
+    `http://${backendIPAddress}/assignment`,
+    options
+  );
+}
+
 const btn = document.getElementById("select-course");
 btn.addEventListener("click", async () => {
   const selected = document.getElementById("course-name");
   console.log(selected.options[selected.selectedIndex].value);
+  clearItem();
+  const userId = (await getUserProfile()).user.id;
+
   let courses = await getCourseList();
   console.log(courses);
   let id = courses.find(
     (course) => course.title === selected.options[selected.selectedIndex].value
   );
-  console.log(id.cv_cid);
+  const cvcid = id.cv_cid;
+  // console.log(id.cv_cid);
 
   let assignments = await getCourseAssignments(id.cv_cid);
   let currentAssignments = [];
@@ -255,17 +325,34 @@ btn.addEventListener("click", async () => {
     });
   }
 
-  // console.log(currentAssignments);
   let currentBoard = [
     { id: 1, items: [] },
     { id: 2, items: [] },
     { id: 3, items: [] },
   ];
-  currentBoard[0].items.push(...currentAssignments);
   console.log(currentAssignments);
+  for (let i = 0; i < currentAssignments.length; ++i) {
+    const assignmentCode = [userId, String(cvcid), String(currentAssignments[i].id)].join('-');
+    const data = await getAssignmentById(assignmentCode);
+    if (data.message == 'ok') {
+      currentBoard[Number(data.status)].items.push(data);
+    } else {
+      const data = {
+        'assignmentCode': assignmentCode,
+        'content': currentAssignments[i].content,
+        'status': '0',
+      }
+      await postAssignment(data);
+      currentBoard[0].items.push(data);
+    }
+  }
   console.log(currentBoard);
-  KanbanAPI.getItems();
-  redrawDOM();
+  addItemColumn(currentBoard);
+  // currentBoard[0].items.push(...currentAssignments);
+  // console.log(currentAssignments);
+  // console.log(currentBoard);
+  // KanbanAPI.getItems();
+  // redrawDOM();
 });
 
 // remove old and add new assignment
