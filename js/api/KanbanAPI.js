@@ -42,42 +42,50 @@ export default class KanbanAPI {
   }
 
   static async updateItem(itemId, newProps) {
-    const data = await read();
-    const [item, currentColumn] = (() => {
-      for (const column of data) {
-        const item = column.items.find((item) => item.id == itemId);
-
-        if (item) {
-          return [item, column];
+    const [item, currentColumn] = (()=>{
+      const parentElement = document.querySelectorAll(".kanban__column-items"); 
+      for(let i=0;i<3;++i){
+        for(const thisItem of Array.from(parentElement[i].children)){
+          // console.log(thisItem.dataset.id);
+          if(thisItem.dataset.id === itemId){
+            return [thisItem, i];
+          }
         }
       }
+
+      return [null, -1];
     })();
+
+    console.log(item, currentColumn);
 
     if (!item) {
       throw new Error("Item not found.");
     }
 
-    item.content =
-      newProps.content === undefined ? item.content : newProps.content;
+    item.content = newProps.content === undefined ? item.content : newProps.content;
 
+    updateAssignmentStatus(itemId, currentColumn);
+
+    
     // Update column and position
-    if (newProps.columnId !== undefined && newProps.position !== undefined) {
-      const targetColumn = data.find(
-        (column) => column.id == newProps.columnId
-      );
+    // if (newProps.columnId !== undefined && newProps.position !== undefined) {
+    //   const targetColumn = data.find(
+    //     (column) => column.id == newProps.columnId
+    //   );
 
-      if (!targetColumn) {
-        throw new Error("Target column not found.");
-      }
+    //   if (!targetColumn) {
+    //     throw new Error("Target column not found.");
+    //   }
 
-      // Delete the item from it's current column
-      currentColumn.items.splice(currentColumn.items.indexOf(item), 1);
+    //   // Delete the item from it's current column
+    //   currentColumn.items.splice(currentColumn.items.indexOf(item), 1);
 
-      // Move item into it's new column and position
-      targetColumn.items.splice(newProps.position, 0, item);
-    }
+    //   // Move item into it's new column and position
+    //   targetColumn.items.splice(newProps.position, 0, item);
 
-    save(data);
+    // }
+
+    // save(data);
   }
 
   static async deleteItem(itemId) {
@@ -159,6 +167,17 @@ async function getCourseList() {
   // console.log(courseList);
   return courseList;
   // return courseDropdown;
+}
+
+async function updateAssignmentStatus(assignmentCode, newStatus){
+  const options = {
+    method: "PUT",
+    credentials: "include",
+  };
+  await fetch(
+    `http://${backendIPAddress}/assignment/status/${assignmentCode}/${newStatus}`,
+    options
+  );
 }
 
 async function addCourseToDropDown() {
@@ -268,6 +287,7 @@ function addRowInColumn(parentElement, id, content){
   //     <div class="kanban__item-input" contenteditable id="open-modal">${content}</div>
   //   </div>`
   // ).children[0];
+  console.log(id);
   const child = new Item(id, content);
   console.log(child.elements.content, id);
   parentElement.appendChild(child.elements.root); 
@@ -347,7 +367,7 @@ btn.addEventListener("click", async () => {
     const data = await getAssignmentById(assignmentCode);
     if (data.message == 'ok') {
       // currentBoard[Number(data.status)].items.push(data);
-      addRowInColumn(parentElement[Number(data.status)], id, content);
+      addRowInColumn(parentElement[Number(data.status)], assignmentCode, content);
     } else {
       const data = {
         'assignmentCode': assignmentCode,

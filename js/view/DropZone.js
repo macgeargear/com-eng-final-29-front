@@ -29,7 +29,7 @@ export default class DropZone {
         columnElement.querySelectorAll(".kanban__dropzone")
       );
       const droppedIndex = dropZonesInColumn.indexOf(dropZone);
-      const itemId = Number(e.dataTransfer.getData("text/plain"));
+      const itemId = String(e.dataTransfer.getData("text/plain"));
       const droppedItemElement = document.querySelector(
         `[data-id="${itemId}"]`
       );
