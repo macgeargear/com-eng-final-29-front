@@ -39,11 +39,6 @@ export default class Item {
       }
     });
 
-    // test adding modal
-    this.elements.root.addEventListener("click", (e) => {
-      console.log(e.target.innerHTML);
-    });
-
     this.elements.root.addEventListener("dragstart", (e) => {
       e.dataTransfer.setData("text/plain", id);
     });
