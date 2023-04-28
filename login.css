@@ -119,3 +119,8 @@ a {
   text-align: center;
   bottom: 0px;
 }
+
+.header {
+  display: flex;
+  justify-content: center;
+}

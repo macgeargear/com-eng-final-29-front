@@ -4,6 +4,11 @@
   --standard-border-radius: 8px;
 }
 
+header {
+  display: flex;
+  justify-content: center;
+}
+
 body {
   font-family: "JetBrains Mono", sans-serif;
 }
@@ -129,8 +134,8 @@ select {
 .kanban {
   display: flex;
   padding: 30px;
-  width: 750px;
-  background: #FF597B;
+  max-width: 750px;
+  background: #ff597b;
   /* background: hsl(323, 59%, 63%); */
   border-radius: 20px;
 }
@@ -169,6 +174,7 @@ select {
   border: 2px solid #de4db3;
   padding: 10px;
   box-shadow: 6px 4px #de4db3;
+  transition: box-shadow 0.2s ease-out 0s, transform 0.2s ease-out 0s;
 }
 
 .kanban__dropzone {
@@ -190,11 +196,22 @@ select {
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  border: 2px solid #B3005E;
+  border: 2px solid #b3005e;
   /* border: 2px solid #b20d7b; */
   /* padding: 10px; */
   margin: 0;
-  box-shadow: 6px 4px #B3005E;
+  box-shadow: 6px 4px #b3005e;
+}
+
+.kanban__add-item:hover,
+.kanban__item-input:hover {
+  box-shadow: rgba(32, 32, 32, 0.05) 0px 16px 16px 0px,
+    rgba(42, 42, 42, 0.05) 0px 8px 8px 0px,
+    rgba(49, 49, 49, 0.05) 0px 4px 4px 0px,
+    rgba(45, 45, 45, 0.05) 0px 2px 2px 0px,
+    rgba(35, 35, 35, 0.05) 0px 64px 64px 0px,
+    rgba(49, 49, 49, 0.05) 0px 32px 32px 0px;
+  transform: translate(-5px);
 }
 
 .kanban__add-item:hover {
@@ -203,6 +220,7 @@ select {
 }
 
 .assignment-container {
+  min-width: 780;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -227,6 +245,12 @@ select {
   cursor: pointer;
 }
 
+@media (max-width: 800px) {
+  h2 {
+    display: none;
+  }
+}
+
 /* text */
 
 h1 {
@@ -234,9 +258,9 @@ h1 {
   font-size: xx-large;
   font-weight: bold;
   margin-bottom: 16px;
-  /* text-decoration-line: underline; */
-  /* text-decoration-line: underline;
-  text-decoration-color: pink; */
+  text-decoration-line: underline;
+  text-decoration-line: underline;
+  text-decoration-color: pink;
 }
 
 h2 {
@@ -245,57 +269,6 @@ h2 {
   margin: 10px;
 }
 
-/* About */
-.team-member {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 50px;
-}
-
-.member-card {
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  margin: 20px;
-  max-width: 300px;
-  overflow: hidden;
-  text-align: left;
-  transition: all 0.3s ease-in-out;
-}
-
-.member-card:hover {
-  transform: translateY(-10px);
-}
-
-.member-card img {
-  width: 100%;
-  height: auto;
-}
-
-.member-card .member-info {
-  padding: 20px;
-}
-
-.member-card h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.member-card p {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-.member-card span {
-  font-weight: bold;
-}
-
-#course-name {
-  cursor: pointer;
-}
-
-#course-name:hover {
-  background-color: rgb(0,0,0,0.1);
-  transition: all 0.2s ease-in-out;
+p {
+  text-align: center;
 }

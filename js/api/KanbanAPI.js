@@ -2,17 +2,6 @@ import Item from "../view/Item.js";
 
 export default class KanbanAPI {
   static async getItems(columnId) {
-    // if (this.click) {
-    //   const column = await read();
-    //   const column_ = column.find((column) => column.id == columnId);
-    //   console.log(column_);
-    //   if (!column_) {
-    //     return [];
-    //   }
-
-    //   return column_.items;
-    // }
-    // console.log(column);
     const column = await read();
     const column_ = column.find((column) => column.id == columnId);
     console.log(column_);
@@ -42,12 +31,12 @@ export default class KanbanAPI {
   }
 
   static async updateItem(itemId, newProps) {
-    const [item, currentColumn] = (()=>{
-      const parentElement = document.querySelectorAll(".kanban__column-items"); 
-      for(let i=0;i<3;++i){
-        for(const thisItem of Array.from(parentElement[i].children)){
+    const [item, currentColumn] = (() => {
+      const parentElement = document.querySelectorAll(".kanban__column-items");
+      for (let i = 0; i < 3; ++i) {
+        for (const thisItem of Array.from(parentElement[i].children)) {
           // console.log(thisItem.dataset.id);
-          if(thisItem.dataset.id === itemId){
+          if (thisItem.dataset.id === itemId) {
             return [thisItem, i];
           }
         }
@@ -62,7 +51,8 @@ export default class KanbanAPI {
       throw new Error("Item not found.");
     }
 
-    item.content = newProps.content === undefined ? item.content : newProps.content;
+    item.content =
+      newProps.content === undefined ? item.content : newProps.content;
 
     updateAssignmentStatus(itemId, currentColumn);
   }
@@ -90,11 +80,8 @@ const getUserProfile = async () => {
   return await fetch(
     `http://${backendIPAddress}/courseville/get_profile_info`,
     options
-  )
-    .then((response) => response.json());
+  ).then((response) => response.json());
 };
-
-let courseDropdown;
 
 async function getCourseList() {
   const options = {
@@ -137,18 +124,10 @@ async function getCourseList() {
   courseList = courseList.filter((course) => {
     return course.semester == lastSemester;
   });
-  // console.log(lastYear, lastSemester);
-  // courseDropdown = courseList;
-  // courseList.map((course) => {
-  //   course_dropdown.innerHTML += `<option value="${course.title}">${course.title}</option>`;
-  // });
-
-  // console.log(courseList);
   return courseList;
-  // return courseDropdown;
 }
 
-async function updateAssignmentStatus(assignmentCode, newStatus){
+async function updateAssignmentStatus(assignmentCode, newStatus) {
   const options = {
     method: "PUT",
     credentials: "include",
@@ -159,6 +138,7 @@ async function updateAssignmentStatus(assignmentCode, newStatus){
   );
 }
 
+let courseDropdown;
 async function addCourseToDropDown() {
   courseDropdown = await getCourseList();
   const course_dropdown = document.getElementById("course-name");
@@ -215,41 +195,18 @@ async function read() {
     });
   }
 
-  // console.log(currentAssignments);
   currentBoard[0].items.push(...currentAssignments);
-  // return [
-  //   { id: 1, items: [] },
-  //   { id: 2, items: [] },
-  //   { id: 3, items: [] },
-  // ];
-  // console.log(currentBoard);
   if (!json) return currentBoard;
   return JSON.parse(json);
 }
 
-function save(data) {
-  localStorage.setItem("kanban-data", JSON.stringify(data));
-}
-
 document.addEventListener("DOMContentLoaded", async function (event) {
   await addCourseToDropDown();
-  // await getCourseList();
   await read();
-  // await kanban.renderColumns();
 });
-
-const redrawDOM = () => {
-  window.document.dispatchEvent(
-    new Event("DOMContentLoaded", {
-      bubbles: true,
-      cancelable: true,
-    })
-  );
-};
 
 function clearItem() {
   const parentElement = document.getElementsByClassName("kanban__column-items"); // replace "parent-element" with the ID of the element you want to clear
-  // const 
   for (let i = 0; i < parentElement.length; ++i) {
     const allChild = parentElement[i].getElementsByClassName("kanban__item");
     for (let j = allChild.length - 1; j >= 0; --j) {
@@ -258,30 +215,22 @@ function clearItem() {
   }
 }
 
-function addRowInColumn(parentElement, id, content){
-  // const parentElement = document.getElementsByClassName("kanban__column-items"); // replace "parent-element" with the ID of the element you want to clear
-  // const
-  // const child = document.createRange().createContextualFragment(`
-  //   <div class="kanban__item" draggable="true">
-  //     <div class="kanban__item-input" contenteditable id="open-modal">${content}</div>
-  //   </div>`
-  // ).children[0];
+function addRowInColumn(parentElement, id, content) {
   console.log(id);
   const child = new Item(id, content);
   console.log(child.elements.content, id);
-  parentElement.appendChild(child.elements.root); 
+  parentElement.appendChild(child.elements.root);
 }
 
 function addItemColumn(data) {
   const parentElement = document.getElementsByClassName("kanban__column-items"); // replace "parent-element" with the ID of the element you want to clear
-  // const 
-  for(let i=0;i<3;++i){
-    for(let j=0;j<data[i].items.length;++j){
+  // const
+  for (let i = 0; i < 3; ++i) {
+    for (let j = 0; j < data[i].items.length; ++j) {
       const child = document.createRange().createContextualFragment(`
       <div class="kanban__item" draggable="true">
         <div class="kanban__item-input" contenteditable id="open-modal">${data[i].items[j].content}</div>
-      </div>`
-      ).children[0];
+      </div>`).children[0];
       parentElement[i].appendChild(child);
     }
   }
@@ -305,14 +254,11 @@ async function postAssignment(data) {
     method: "POST",
     credentials: "include",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(data), // body
   };
-  await fetch(
-    `http://${backendIPAddress}/assignment`,
-    options
-  );
+  await fetch(`http://${backendIPAddress}/assignment`, options);
 }
 
 const btn = document.getElementById("select-course");
@@ -332,7 +278,7 @@ btn.addEventListener("click", async () => {
 
   let assignments = await getCourseAssignments(id.cv_cid);
   console.log(document.querySelectorAll(".kanban__column-items"));
-  const parentElement = document.querySelectorAll(".kanban__column-items"); 
+  const parentElement = document.querySelectorAll(".kanban__column-items");
   // const parentElement = document.getElementsByClassName("kanban__column-items");
   let currentAssignments = [];
   for (const assignment of assignments.data) {
@@ -342,51 +288,26 @@ btn.addEventListener("click", async () => {
     //   id: assignment.itemid,
     //   content: assignment.title,
     // });
-    const assignmentCode = [userId, String(cvcid), String(id)].join('-');
+    const assignmentCode = [userId, String(cvcid), String(id)].join("-");
     const data = await getAssignmentById(assignmentCode);
-    if (data.message == 'ok') {
+    if (data.message == "ok") {
       // currentBoard[Number(data.status)].items.push(data);
-      addRowInColumn(parentElement[Number(data.status)], assignmentCode, content);
+      addRowInColumn(
+        parentElement[Number(data.status)],
+        assignmentCode,
+        content
+      );
     } else {
       const data = {
-        'assignmentCode': assignmentCode,
-        'content': content,
-        'status': '0',
-      }
+        assignmentCode: assignmentCode,
+        content: content,
+        status: "0",
+      };
       await postAssignment(data);
       // currentBoard[0].items.push(data);
       addRowInColumn(parentElement[0], id, content);
     }
   }
-
-  // let currentBoard = [
-  //   { id: 1, items: [] },
-  //   { id: 2, items: [] },
-  //   { id: 3, items: [] },
-  // ];
-  // console.log(currentAssignments);
-  // for (let i = 0; i < currentAssignments.length; ++i) {
-  //   const assignmentCode = [userId, String(cvcid), String(currentAssignments[i].id)].join('-');
-  //   const data = await getAssignmentById(assignmentCode);
-  //   if (data.message == 'ok') {
-  //     currentBoard[Number(data.status)].items.push(data);
-  //   } else {
-  //     const data = {
-  //       'assignmentCode': assignmentCode,
-  //       'content': currentAssignments[i].content,
-  //       'status': '0',
-  //     }
-  //     await postAssignment(data);
-  //     currentBoard[0].items.push(data);
-  //   }
-  // }
-  // console.log(currentBoard);
-  // addItemColumn(currentBoard);
-  // currentBoard[0].items.push(...currentAssignments);
-  // console.log(currentAssignments);
-  // console.log(currentBoard);
-  // KanbanAPI.getItems();
-  // redrawDOM();
 });
 
 // remove old and add new assignment
