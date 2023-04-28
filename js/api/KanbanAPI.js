@@ -1,3 +1,5 @@
+import Item from "../view/Item.js";
+
 export default class KanbanAPI {
   static async getItems(columnId) {
     // if (this.click) {
@@ -258,6 +260,18 @@ function clearItem() {
   }
 }
 
+function addRowInColumn(parentElement, id, content){
+  // const parentElement = document.getElementsByClassName("kanban__column-items"); // replace "parent-element" with the ID of the element you want to clear
+  // const
+  // const child = document.createRange().createContextualFragment(`
+  //   <div class="kanban__item" draggable="true">
+  //     <div class="kanban__item-input" contenteditable id="open-modal">${content}</div>
+  //   </div>`
+  // ).children[0];
+  const child = new Item(id, content);
+  parentElement.appendChild(child); 
+}
+
 function addItemColumn(data) {
   const parentElement = document.getElementsByClassName("kanban__column-items"); // replace "parent-element" with the ID of the element you want to clear
   // const 
@@ -317,37 +331,55 @@ btn.addEventListener("click", async () => {
   // console.log(id.cv_cid);
 
   let assignments = await getCourseAssignments(id.cv_cid);
+  const parentElement = document.getElementsByClassName("kanban__column-items");
   let currentAssignments = [];
   for (const assignment of assignments.data) {
-    currentAssignments.push({
-      id: assignment.itemid,
-      content: assignment.title,
-    });
-  }
-
-  let currentBoard = [
-    { id: 1, items: [] },
-    { id: 2, items: [] },
-    { id: 3, items: [] },
-  ];
-  console.log(currentAssignments);
-  for (let i = 0; i < currentAssignments.length; ++i) {
-    const assignmentCode = [userId, String(cvcid), String(currentAssignments[i].id)].join('-');
+    const id = assignment.itemId;
+    const content = assignment.title;
+    // currentAssignments.push({
+    //   id: assignment.itemid,
+    //   content: assignment.title,
+    // });
+    const assignmentCode = [userId, String(cvcid), String(id)].join('-');
     const data = await getAssignmentById(assignmentCode);
     if (data.message == 'ok') {
-      currentBoard[Number(data.status)].items.push(data);
+      // currentBoard[Number(data.status)].items.push(data);
+      addRowInColumn(parentElement[Number(data.status)], id, content);
     } else {
       const data = {
         'assignmentCode': assignmentCode,
-        'content': currentAssignments[i].content,
+        'content': content,
         'status': '0',
       }
       await postAssignment(data);
-      currentBoard[0].items.push(data);
+      // currentBoard[0].items.push(data);
+      addRowInColumn(parentElement[0], id, content);
     }
   }
-  console.log(currentBoard);
-  addItemColumn(currentBoard);
+
+  // let currentBoard = [
+  //   { id: 1, items: [] },
+  //   { id: 2, items: [] },
+  //   { id: 3, items: [] },
+  // ];
+  // console.log(currentAssignments);
+  // for (let i = 0; i < currentAssignments.length; ++i) {
+  //   const assignmentCode = [userId, String(cvcid), String(currentAssignments[i].id)].join('-');
+  //   const data = await getAssignmentById(assignmentCode);
+  //   if (data.message == 'ok') {
+  //     currentBoard[Number(data.status)].items.push(data);
+  //   } else {
+  //     const data = {
+  //       'assignmentCode': assignmentCode,
+  //       'content': currentAssignments[i].content,
+  //       'status': '0',
+  //     }
+  //     await postAssignment(data);
+  //     currentBoard[0].items.push(data);
+  //   }
+  // }
+  // console.log(currentBoard);
+  // addItemColumn(currentBoard);
   // currentBoard[0].items.push(...currentAssignments);
   // console.log(currentAssignments);
   // console.log(currentBoard);
