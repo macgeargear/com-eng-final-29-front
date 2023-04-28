@@ -195,7 +195,7 @@ async function read() {
   ];
   let currentAssignments = [];
 
-  let assignments = await getCourseAssignments(32200);
+  let assignments = await getCourseAssignments(32201);
   for (const assignment of assignments.data) {
     currentAssignments.push({
       id: assignment.itemid,
@@ -267,3 +267,8 @@ btn.addEventListener("click", async () => {
   KanbanAPI.getItems();
   redrawDOM();
 });
+
+// remove old and add new assignment
+function reRender() {
+  const columns = document.querySelectorAll(".kanban__column");
+}

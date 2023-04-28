@@ -224,3 +224,49 @@ h2 {
   font-size: large;
   margin: 10px;
 }
+
+/* About */
+.team-member {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.member-card {
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  margin: 20px;
+  max-width: 300px;
+  overflow: hidden;
+  text-align: left;
+  transition: all 0.3s ease-in-out;
+}
+
+.member-card:hover {
+  transform: translateY(-10px);
+}
+
+.member-card img {
+  width: 100%;
+  height: auto;
+}
+
+.member-card .member-info {
+  padding: 20px;
+}
+
+.member-card h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.member-card p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.member-card span {
+  font-weight: bold;
+}
