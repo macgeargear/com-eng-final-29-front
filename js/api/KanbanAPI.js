@@ -259,32 +259,10 @@ function clearItem() {
 }
 
 function addRowInColumn(parentElement, id, content){
-  // const parentElement = document.getElementsByClassName("kanban__column-items"); // replace "parent-element" with the ID of the element you want to clear
-  // const
-  // const child = document.createRange().createContextualFragment(`
-  //   <div class="kanban__item" draggable="true">
-  //     <div class="kanban__item-input" contenteditable id="open-modal">${content}</div>
-  //   </div>`
-  // ).children[0];
   console.log(id);
   const child = new Item(id, content);
   console.log(child.elements.content, id);
   parentElement.appendChild(child.elements.root); 
-}
-
-function addItemColumn(data) {
-  const parentElement = document.getElementsByClassName("kanban__column-items"); // replace "parent-element" with the ID of the element you want to clear
-  // const 
-  for(let i=0;i<3;++i){
-    for(let j=0;j<data[i].items.length;++j){
-      const child = document.createRange().createContextualFragment(`
-      <div class="kanban__item" draggable="true">
-        <div class="kanban__item-input" contenteditable id="open-modal">${data[i].items[j].content}</div>
-      </div>`
-      ).children[0];
-      parentElement[i].appendChild(child);
-    }
-  }
 }
 
 async function getAssignmentById(assignmentCode) {
