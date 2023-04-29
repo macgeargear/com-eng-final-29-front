@@ -13,6 +13,7 @@ export default class Item {
 
     // Construct Modal
     // get importance element
+    this.elements.timeLeft = this.elements.root.querySelector(`.time-left`);
     this.elements.closeModal = this.elements.root.querySelector(`.close`);
     this.elements.modal = this.elements.root.querySelector(`.modal`);
     this.elements.modalContent =
@@ -42,24 +43,29 @@ export default class Item {
     // set time
     this.elements.modalDueDate.innerHTML += this.getTime(dueTime);
     const dayLeft = this.getDayLeft(dueDate);
-    console.log(dayLeft);
-    console.log(this.elements.modalTime)
+    // console.log(content, dayLeft);
     if (dayLeft > 0) {
       this.elements.modalDayLeft.innerHTML += dayLeft + " Day Left";
-      // this.elements.modalTime.innerHTML = dayLeft;
+      this.elements.timeLeft.innerHTML += dayLeft + " Day Left";
     } else if (dayLeft == 0) {
       const hourLeft = this.getHourLeft(dueTime);
+      this.elements.input.style.background = "#f0f4c3";
       if (hourLeft >= 1) {
         this.elements.modalDayLeft.innerHTML += hourLeft + " Hour Left";
-        // this.elements.modalTime.textContent = hourLeft;
+        this.elements.timeLeft.innerHTML += hourLeft + " Hour Left";
       } else {
-        this.elements.modalDayLeft.innerHTML += this.getminuteLefr(dueTime) + " Minute Left";
-        // this.elements.modalTime.textContent = this.getminuteLefr(dueTime);
+        const minuteLeft = this.getminuteLefr(dueTime);
+        this.elements.modalDayLeft.innerHTML += minuteLeft + " Minute Left";
+        this.elements.timeLeft.innerHTML += minuteLeft + " Minute Left";
       }
     } else {
       this.elements.modalDayLeft.innerHTML = "This assignment is ended";
+      this.elements.timeLeft.innerHTML += "This assignment is ended";
+
+      this.elements.input.style.background = "#111111";
     }
 
+    this.elements.input.innerHTML += "<br><br>" + this.elements.timeLeft.innerHTML;
 
     const onBlur = () => {
       const newContent = this.elements.input.textContent.trim();
@@ -192,7 +198,7 @@ export default class Item {
               </div>
             </div>
           </div>
-          <div class="kanban__item-input"></div>
+          <div class="kanban__item-input"><div class="time-left"></div></div>
         </div>
     `).children[0];
   }

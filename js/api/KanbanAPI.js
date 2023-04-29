@@ -246,9 +246,11 @@ function clearItem() {
   }
 }
 
-function addRowInColumn(parentElement, id, content) {
-  const child = new Item(id, content);
-  parentElement.appendChild(child.elements.root);
+function addRowInColumn(parentElement, id, content, instruction, dueDate, dueTime) {
+  const child = new Item(id, content, instruction, dueDate, dueTime);
+  if(String(child.elements.input.style.background) !== "rgb(17, 17, 17)"){
+    parentElement.appendChild(child.elements.root);
+  }
 }
 
 async function getAssignmentById(assignmentCode) {
@@ -296,14 +298,12 @@ btn.addEventListener("click", async () => {
     const id = assignment.itemid;
     const content = assignment.title;
 
+    const assignmentInfo = await getAssignmentInfo(id);
     const assignmentCode = [userId, String(cvcid), String(id)].join("-");
     const data = await getAssignmentById(assignmentCode);
+    let tar = parentElement[0];
     if (data.message == "ok") {
-      addRowInColumn(
-        parentElement[Number(data.status)],
-        assignmentCode,
-        content
-      );
+      tar = parentElement[Number(data.status)];
     } else {
       const data = {
         assignmentCode: assignmentCode,
@@ -311,8 +311,8 @@ btn.addEventListener("click", async () => {
         status: "0",
       };
       await postAssignment(data);
-      addRowInColumn(parentElement[0], id, content);
     }
+    addRowInColumn(tar, assignmentCode, content, assignmentInfo.instruction, assignmentInfo.duedate, assignmentInfo.duetime);
   }
 });
 
