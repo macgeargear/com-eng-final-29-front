@@ -1,6 +1,5 @@
 import KanbanAPI from "../api/KanbanAPI.js";
 import DropZone from "./DropZone.js";
-import { countDown } from "../countdown.js";
 export default class Item {
   constructor(id, content, instruction, dueDate, dueTime) {
     const bottomDropZone = DropZone.createDropZone();

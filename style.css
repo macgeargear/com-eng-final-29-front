@@ -13,6 +13,13 @@ body {
   font-family: "JetBrains Mono", sans-serif;
 }
 
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .container {
   max-width: 1200px;
   width: 100%;
@@ -28,6 +35,10 @@ body {
   right: 0;
   background-color: white;
   z-index: 999;
+}
+
+.menu-bar-wrapper.scrolled {
+  background-color: #ebb7d9;
 }
 
 .menu-bar {
