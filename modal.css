@@ -121,3 +121,13 @@ p.modal-label {
   color: #fff;
   transition: all 0.2s ease-in-out;
 }
+
+.item-day-left {
+  background-color: #ece9b0;
+  transform: color 0.3s ease-in-out;
+  width: fit-content;
+  padding: 4px;
+  border-radius: 6px;
+  margin-left: 0px;
+  font-weight: 100;
+}

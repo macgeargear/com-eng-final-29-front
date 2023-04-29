@@ -5,25 +5,25 @@
     <title>MyCourseville API Home Page</title>
     <link rel="stylesheet" href="./reset.css" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./summary.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <script src="./script_cv.js" defer></script>
     <script src="./js/main.js" type="module" defer></script>
   </head>
 
-
-<head>
-  <meta charset="UTF-8" />
-  <title>MyCourseville API Home Page</title>
-  <link rel="stylesheet" href="./reset.css" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="modal.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <script src="./script_cv.js" defer></script>
-  <!-- <script src="./script_modal.js" defer></script> -->
-  <script src="./js/main.js" type="module" defer></script>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <title>MyCourseville API Home Page</title>
+    <link rel="stylesheet" href="./reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="modal.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script src="./script_cv.js" defer></script>
+    <!-- <script src="./script_modal.js" defer></script> -->
+    <script src="./js/main.js" type="module" defer></script>
+  </head>
 
   <body>
     <header class="menu-bar-wrapper">
@@ -32,7 +32,6 @@
         <button class="button logout-button" onclick="logout()">Logout</button>
       </div>
     </header>
-
 
     <main>
       <div class="select-container">
@@ -46,6 +45,40 @@
       <div class="assignment-container">
         <section>
           <h1 class="title">MY TASK</h1>
+          <div class="summary" id="summary">show progress</div>
+          <div class="summary-container" id="summary-container">
+            <div class="summary-status-all">
+              <div class="summary-status-items">
+                <div class="summary-status-item">
+                  <p class="summary-item-title">Not started🙅🏻</p>
+                  <p class="summary-item-percent">60%</p>
+                </div>
+              </div>
+              <div class="summary-status-items">
+                <div class="summary-status-item">
+                  <p class="summary-item-title">In Progress✏️</p>
+                  <p class="summary-item-percent">30%</p>
+                </div>
+              </div>
+              <div class="summary-status-items">
+                <div class="summary-status-item">
+                  <p class="summary-item-title">Completed 🎉</p>
+                  <p class="summary-item-percent">5%</p>
+                </div>
+              </div>
+              <div class="summary-status-items">
+                <div class="summary-status-item">
+                  <p class="summary-item-title">past due💀</p>
+                  <p class="summary-item-percent due">5%</p>
+                </div>
+              </div>
+              <h1 class="emoji">🎉</h1>
+            </div>
+            <div class="summary-title">
+              <h1 class="summary-item-header">summary 💫</h1>
+              <button class="summary-close">close</button>
+            </div>
+          </div>
           <div class="kanban">
             <!--
             <div class="kanban__column">
@@ -62,5 +95,6 @@
       &#169; 2110221 Computer Engineering Essentials (2022/2) &#169;
     </div> -->
     </main>
+    <script src="./script_summary.js"></script>
   </body>
 </html>

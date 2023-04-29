@@ -21,12 +21,14 @@ export default class Item {
     this.elements.modalTitle = this.elements.root.querySelector(`.modal-title`);
     this.elements.modalInstruction =
       this.elements.root.querySelector(".modal-instruction");
-    this.elements.modalDayLeft = this.elements.root.querySelector(`.modal-day-left`);
+    this.elements.modalDayLeft =
+      this.elements.root.querySelector(`.modal-day-left`);
     this.elements.modalTime = this.elements.root.querySelector(`.time`);
-    this.elements.modalDueDate = this.elements.root.querySelector(`.modal-duedate`);
+    this.elements.modalDueDate =
+      this.elements.root.querySelector(`.modal-duedate`);
 
-      // init this item
-      this.elements.root.dataset.id = id;
+    // init this item
+    this.elements.root.dataset.id = id;
     this.elements.input.textContent = content;
     this.content = content;
     this.elements.root.appendChild(bottomDropZone);
@@ -65,7 +67,9 @@ export default class Item {
       this.elements.input.style.background = "#111111";
     }
 
-    this.elements.input.innerHTML += "<br><br>" + this.elements.timeLeft.innerHTML;
+    this.elements.input.innerHTML +=
+      "<br><br>" +
+      `<p class="item-day-left">${this.elements.timeLeft.innerHTML}</p>`;
 
     const onBlur = () => {
       const newContent = this.elements.input.textContent.trim();
@@ -136,7 +140,7 @@ export default class Item {
     const hoursLeft = Math.floor(differenceMs / (1000 * 60 * 60));
 
     // Output the number of hours left
-    return hoursLeft
+    return hoursLeft;
   }
 
   getminuteLefr(dueTime) {
@@ -152,7 +156,7 @@ export default class Item {
     const minutesLeft = Math.floor(differenceMs / (1000 * 60));
 
     // Output the number of minutes left
-    return minutesLeft
+    return minutesLeft;
   }
 
   getTime(dueTime) {
@@ -167,12 +171,16 @@ export default class Item {
     const seconds = date.getSeconds();
 
     // Create a formatted date string in the desired format
-    const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-    const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+    const formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day
+      .toString()
+      .padStart(2, "0")}`;
+    const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}`;
     const formattedDateTime = `${formattedDate} ${formattedTime}`;
 
     // Output the formatted date and time string
-    return formattedDateTime
+    return formattedDateTime;
   }
 
   static createRoot() {
