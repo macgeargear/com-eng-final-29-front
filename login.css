@@ -52,7 +52,7 @@ button {
 
 .about-button:hover {
   transition: all 0.2s ease-in-out;
-  background: #e94abe;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .section-button {
@@ -72,6 +72,7 @@ h2 {
 
 h1#app-name {
   margin-bottom: 10px;
+  font-size: 4rem;
 }
 
 p.section-subtitle {
@@ -115,9 +116,13 @@ a {
 }
 
 .section-credit {
+  position: fixed;
   font-size: 12px;
   text-align: center;
   bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin: 20px;
 }
 
 .header {

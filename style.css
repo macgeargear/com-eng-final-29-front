@@ -122,6 +122,8 @@ button {
 
 select {
   box-shadow: 0 10px 250x rgba(0, 0, 0, 0.25);
+  width: 400px;
+  max-width: 600px;
   outline: none;
   background: #f3efef;
   padding: 12px;
@@ -251,6 +253,12 @@ select {
   }
 }
 
+@media (max-width: 1000px) {
+  .kanban {
+    display: inline-block;
+  }
+}
+
 /* text */
 
 h1 {
@@ -271,4 +279,9 @@ h2 {
 
 p {
   text-align: center;
+}
+
+.section-credit {
+  position: sticky;
+  bottom: 0;
 }

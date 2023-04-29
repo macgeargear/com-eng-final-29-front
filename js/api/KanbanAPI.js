@@ -178,6 +178,19 @@ async function getCourseAssignments(cv_cid) {
   return data;
 }
 
+async function getAssignmentInfo(id) {
+  const options = {
+    method: "GET",
+    credentials: "include",
+  };
+  const res = await fetch(
+    `http://${backendIPAddress}/assignment/` + id,
+    options
+  );
+  const data = await res.json();
+  console.log(data);
+  return data;
+}
 async function read() {
   // const json = localStorage.getItem("kanban-data");
   const json = false;
@@ -307,3 +320,5 @@ btn.addEventListener("click", async () => {
     }
   }
 });
+
+export { getAssignmentInfo };
