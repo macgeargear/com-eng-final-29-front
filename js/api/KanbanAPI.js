@@ -183,14 +183,26 @@ async function getAssignmentInfo(id) {
     method: "GET",
     credentials: "include",
   };
-  const res = await fetch(
-    `http://${backendIPAddress}/assignment/` + id,
+  return (await fetch(
+    `http://${backendIPAddress}/courseville/get_assignment_detail/${id}`,
     options
-  );
-  const data = await res.json();
-  console.log(data);
-  return data;
+  ).then((response) => response.json())).data;
 }
+
+// async function getAssignmentInfo(id) {
+//   const options = {
+//     method: "GET",
+//     credentials: "include",
+//   };
+//   const res = await fetch(
+//     `http://${backendIPAddress}/assignment/` + id,
+//     options
+//   );
+//   const data = await res.json();
+//   console.log(data);
+//   return data;
+// }
+
 async function read() {
   // const json = localStorage.getItem("kanban-data");
   const json = false;
@@ -201,14 +213,19 @@ async function read() {
   ];
   let currentAssignments = [];
 
-  let assignments = await getCourseAssignments(32201);
+  // let assignments = await getCourseAssignments(32201);
+  let assignments = await getCourseAssignments(33808);
   for (const assignment of assignments.data) {
+    const id = assignment.itemid;
+    const data = await getAssignmentInfo(id);
     currentAssignments.push({
-      id: assignment.itemid,
+      id: id,
       content: assignment.title,
+      instruction: data.instruction,
+      dueDate: data.duedate,
+      dueTime: data.duetime
     });
   }
-
   currentBoard[0].items.push(...currentAssignments);
   if (!json) return currentBoard;
   return JSON.parse(json);
@@ -232,27 +249,6 @@ function clearItem() {
 function addRowInColumn(parentElement, id, content) {
   const child = new Item(id, content);
   parentElement.appendChild(child.elements.root);
-}
-
-// function addRowInColumn(parentElement, id, content) {
-//   console.log(id);
-//   const child = new Item(id, content);
-//   console.log(child.elements.content, id);
-//   parentElement.appendChild(child.elements.root);
-// }
-
-function addItemColumn(data) {
-  const parentElement = document.getElementsByClassName("kanban__column-items"); // replace "parent-element" with the ID of the element you want to clear
-  // const
-  for (let i = 0; i < 3; ++i) {
-    for (let j = 0; j < data[i].items.length; ++j) {
-      const child = document.createRange().createContextualFragment(`
-      <div class="kanban__item" draggable="true">
-        <div class="kanban__item-input" contenteditable id="open-modal">${data[i].items[j].content}</div>
-      </div>`).children[0];
-      parentElement[i].appendChild(child);
-    }
-  }
 }
 
 async function getAssignmentById(assignmentCode) {
@@ -296,7 +292,6 @@ btn.addEventListener("click", async () => {
 
   const parentElement = document.querySelectorAll(".kanban__column-items");
 
-  let currentAssignments = [];
   for (const assignment of assignments.data) {
     const id = assignment.itemid;
     const content = assignment.title;

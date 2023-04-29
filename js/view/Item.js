@@ -1,23 +1,9 @@
 import KanbanAPI from "../api/KanbanAPI.js";
 import DropZone from "./DropZone.js";
-import { getAssignmentInfo } from "../api/KanbanAPI.js";
 import { countDown } from "../countdown.js";
 export default class Item {
-  constructor(id, content) {
+  constructor(id, content, instruction, dueDate, dueTime) {
     const bottomDropZone = DropZone.createDropZone();
-    const instruction = `Accept the assignment in this GitHub link:
-
-    \n\n
-    Download this initial lab file.
-    
-    \n\n
-    To submit, upload your files to the remote repository generated for this GitHub assignment. 
-    
-    \n\n
-     
-    
-    \n\n
-    `;
 
     this.elements = {};
     this.elements.root = Item.createRoot();
@@ -43,12 +29,11 @@ export default class Item {
     this.elements.modal.setAttribute("id", `modal-${this.id}`);
     this.elements.modalContent.setAttribute("id", `modal-content-${this.id}`);
     this.elements.closeModal.setAttribute("id", `close-modal-${this.id}`);
-    this.elements.modalTitle.textContent = content;
-    this.elements.modalInstruction.textContent = instruction.replace(
-      /^\s+|\s+$/gm,
-      ""
-    );
     this.elements.closeModal.textContent = `close`;
+    this.elements.modalTitle.textContent = content;
+    this.elements.modalInstruction.innerHTML = instruction;
+
+    console.log(countDown(dueDate));
 
     const onBlur = () => {
       const newContent = this.elements.input.textContent.trim();
@@ -74,8 +59,7 @@ export default class Item {
     // modal
     // open
     this.elements.input.addEventListener("click", async () => {
-      // await getAssignmentInfo(id);
-      countDown();
+      // countDown(dueDate);
       this.elements.modal.style.display = "block";
     });
 
@@ -109,7 +93,7 @@ export default class Item {
               <div class="instruction-container">
                 <div class="modal-day-left" id="countdown">
                   <div class="countdown"><span id="days"></span></div> Day left
-                 </div> 
+                </div> 
                 <p class="modal-label">instruction</p>
                 <p class="modal-instruction"></p>
                 <button class="modal-duedate">due: 2022-03-04</button>
