@@ -1,23 +1,9 @@
 import KanbanAPI from "../api/KanbanAPI.js";
 import DropZone from "./DropZone.js";
-import { getAssignmentInfo } from "../api/KanbanAPI.js";
 import { countDown } from "../countdown.js";
 export default class Item {
-  constructor(id, content) {
+  constructor(id, content, instruction, dueDate, dueTime) {
     const bottomDropZone = DropZone.createDropZone();
-    const instruction = `Accept the assignment in this GitHub link:
-
-    \n\n
-    Download this initial lab file.
-    
-    \n\n
-    To submit, upload your files to the remote repository generated for this GitHub assignment. 
-    
-    \n\n
-     
-    
-    \n\n
-    `;
 
     this.elements = {};
     this.elements.root = Item.createRoot();
@@ -26,6 +12,8 @@ export default class Item {
     );
 
     // Construct Modal
+    // get importance element
+    this.elements.timeLeft = this.elements.root.querySelector(`.time-left`);
     this.elements.closeModal = this.elements.root.querySelector(`.close`);
     this.elements.modal = this.elements.root.querySelector(`.modal`);
     this.elements.modalContent =
@@ -33,22 +21,51 @@ export default class Item {
     this.elements.modalTitle = this.elements.root.querySelector(`.modal-title`);
     this.elements.modalInstruction =
       this.elements.root.querySelector(".modal-instruction");
+    this.elements.modalDayLeft = this.elements.root.querySelector(`.modal-day-left`);
+    this.elements.modalTime = this.elements.root.querySelector(`.time`);
+    this.elements.modalDueDate = this.elements.root.querySelector(`.modal-duedate`);
 
-    this.elements.root.dataset.id = id;
+      // init this item
+      this.elements.root.dataset.id = id;
     this.elements.input.textContent = content;
     this.content = content;
     this.elements.root.appendChild(bottomDropZone);
 
+    // init modal
     this.elements.input.setAttribute("id", `open-modal-${this.id}`);
     this.elements.modal.setAttribute("id", `modal-${this.id}`);
     this.elements.modalContent.setAttribute("id", `modal-content-${this.id}`);
     this.elements.closeModal.setAttribute("id", `close-modal-${this.id}`);
-    this.elements.modalTitle.textContent = content;
-    this.elements.modalInstruction.textContent = instruction.replace(
-      /^\s+|\s+$/gm,
-      ""
-    );
     this.elements.closeModal.textContent = `close`;
+    this.elements.modalTitle.textContent = content;
+    this.elements.modalInstruction.innerHTML = instruction;
+
+    // set time
+    this.elements.modalDueDate.innerHTML += this.getTime(dueTime);
+    const dayLeft = this.getDayLeft(dueDate);
+    // console.log(content, dayLeft);
+    if (dayLeft > 0) {
+      this.elements.modalDayLeft.innerHTML += dayLeft + " Day Left";
+      this.elements.timeLeft.innerHTML += dayLeft + " Day Left";
+    } else if (dayLeft == 0) {
+      const hourLeft = this.getHourLeft(dueTime);
+      this.elements.input.style.background = "#f0f4c3";
+      if (hourLeft >= 1) {
+        this.elements.modalDayLeft.innerHTML += hourLeft + " Hour Left";
+        this.elements.timeLeft.innerHTML += hourLeft + " Hour Left";
+      } else {
+        const minuteLeft = this.getminuteLefr(dueTime);
+        this.elements.modalDayLeft.innerHTML += minuteLeft + " Minute Left";
+        this.elements.timeLeft.innerHTML += minuteLeft + " Minute Left";
+      }
+    } else {
+      this.elements.modalDayLeft.innerHTML = "This assignment is ended";
+      this.elements.timeLeft.innerHTML += "This assignment is ended";
+
+      this.elements.input.style.background = "#111111";
+    }
+
+    this.elements.input.innerHTML += "<br><br>" + this.elements.timeLeft.innerHTML;
 
     const onBlur = () => {
       const newContent = this.elements.input.textContent.trim();
@@ -74,8 +91,7 @@ export default class Item {
     // modal
     // open
     this.elements.input.addEventListener("click", async () => {
-      // await getAssignmentInfo(id);
-      countDown();
+      // countDown(dueDate);
       this.elements.modal.style.display = "block";
     });
 
@@ -93,6 +109,72 @@ export default class Item {
     });
   }
 
+  getDayLeft(dueDate) {
+    const targetDate = new Date(dueDate);
+    const today = new Date();
+
+    // Calculate the difference in milliseconds between the target date and today
+    const differenceMs = targetDate - today;
+
+    // Convert the difference to days and round down
+    const daysLeft = Math.floor(differenceMs / (1000 * 60 * 60 * 24));
+
+    // Output the number of days left
+    return daysLeft;
+  }
+
+  getHourLeft(dueTime) {
+    const unixTimestampMs = Number(dueTime) * 1000;
+
+    // Get the date and time from the Unix timestamp
+    const date = new Date(unixTimestampMs);
+
+    // Get the difference in milliseconds between the target date and now
+    const differenceMs = date.getTime() - Date.now();
+
+    // Convert the difference to hours and round down
+    const hoursLeft = Math.floor(differenceMs / (1000 * 60 * 60));
+
+    // Output the number of hours left
+    return hoursLeft
+  }
+
+  getminuteLefr(dueTime) {
+    const unixTimestampMs = Number(dueTime) * 1000;
+
+    // Get the date and time from the Unix timestamp
+    const date = new Date(unixTimestampMs);
+
+    // Get the difference in milliseconds between the target date and now
+    const differenceMs = date.getTime() - Date.now();
+
+    // Convert the difference to minutes and round down
+    const minutesLeft = Math.floor(differenceMs / (1000 * 60));
+
+    // Output the number of minutes left
+    return minutesLeft
+  }
+
+  getTime(dueTime) {
+    const date = new Date(Number(dueTime) * 1000);
+
+    // Get the individual components of the date and time
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // getMonth() returns a zero-based index
+    const day = date.getDate();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+
+    // Create a formatted date string in the desired format
+    const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+    const formattedDateTime = `${formattedDate} ${formattedTime}`;
+
+    // Output the formatted date and time string
+    return formattedDateTime
+  }
+
   static createRoot() {
     const range = document.createRange();
 
@@ -108,15 +190,15 @@ export default class Item {
               </div>
               <div class="instruction-container">
                 <div class="modal-day-left" id="countdown">
-                  <div class="countdown"><span id="days"></span></div> Day left
-                 </div> 
+                  <div class="countdown"><span id="days" class="time"></span></div>
+                </div> 
                 <p class="modal-label">instruction</p>
                 <p class="modal-instruction"></p>
-                <button class="modal-duedate">due: 2022-03-04</button>
+                <button class="modal-duedate">due: </button>
               </div>
             </div>
           </div>
-          <div class="kanban__item-input"></div>
+          <div class="kanban__item-input"><div class="time-left"></div></div>
         </div>
     `).children[0];
   }
