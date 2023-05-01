@@ -1,4 +1,3 @@
-/* Use a minimalist design approach with plenty of white space */
 body {
   background-color: #fff;
   color: #333;
@@ -26,7 +25,7 @@ body {
 
 button {
   padding: 10px 20px;
-  margin-right: 10px;
+  margin: 10px 10px;
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
@@ -34,7 +33,6 @@ button {
   border: none;
 }
 
-/* Use a limited color palette with bold accents */
 .login-button {
   background-color: #e94abe;
   color: #fff;
@@ -52,7 +50,7 @@ button {
 
 .about-button:hover {
   transition: all 0.2s ease-in-out;
-  background: #e94abe;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .section-button {
@@ -72,6 +70,7 @@ h2 {
 
 h1#app-name {
   margin-bottom: 10px;
+  font-size: 4rem;
 }
 
 p.section-subtitle {
@@ -84,10 +83,9 @@ p.section-subtitle {
 button,
 a {
   transition: all 0.2s ease-in-out;
+  /* Implement responsive design to ensure the page looks good on all devices */
 }
-
-/* Implement responsive design to ensure the page looks good on all devices */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   h1,
   h2 {
     font-size: 24px;
@@ -99,21 +97,24 @@ a {
 
   button {
     font-size: 14px;
-    padding: 8px 16px;
+    width: 80%;
+  }
+  .section-button {
+    flex-direction: column;
   }
 }
 
-/* Use icons and images to enhance the user experience */
-.section-credit::before {
-  content: url("./images/copyright.png");
-  display: inline-block;
-  margin-right: 5px;
-  /* vertical-align: middle; */
-  /* text-align: center; */
-}
-
 .section-credit {
+  position: fixed;
   font-size: 12px;
   text-align: center;
   bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
 }

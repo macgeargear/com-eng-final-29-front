@@ -13,18 +13,6 @@ export default class Kanban {
     });
   }
 
-  // async renderColumns() {
-  //   // console.log(items);
-  //   // items.forEach((item) => {
-  //   //   this.renderItem(item);
-  //   // });
-
-  //   for (const columnView of this.columnViews) {
-  //     // console.log(columnView);
-  //     await columnView.renderItems();
-  //   }
-  // }
-
   static columns() {
     return [
       {

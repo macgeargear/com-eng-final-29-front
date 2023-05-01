@@ -3,14 +3,12 @@ function _countAssignment() {
   let i = 0;
   const elm = Array.from(document.querySelectorAll(".kanban__column-title"));
   for (const e of Array.from(elm)) {
-    //   console.log(e.nextElementSibling.childElementCount);
     countAssignment[i] = Math.max(
       0,
       e.nextElementSibling.childElementCount - 1
     );
     i++;
   }
-  console.log(countAssignment);
   return countAssignment;
 }
 
@@ -18,7 +16,6 @@ function openModal() {
   const click = document.getElementById("summary");
   click.addEventListener("click", () => {
     document.querySelector("#modal-summary").style.display = "flex";
-    console.log("click");
     updateProgress();
   });
 }
@@ -42,7 +39,6 @@ function updateProgress() {
   notstarted.innerHTML = `${Math.round((countAssignment[0] / total) * 100)}%`;
   inprogress.innerHTML = `${Math.round((countAssignment[1] / total) * 100)}%`;
   completed.innerHTML = `${Math.round((countAssignment[2] / total) * 100)}%`;
-  pastdue.innerHTML = `${0}%`;
 }
 
 function run() {

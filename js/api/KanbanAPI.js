@@ -1,16 +1,6 @@
 import Item from "../view/Item.js";
 
 export default class KanbanAPI {
-  // static async getItems(columnId) {
-  //   const column = await read();
-  //   const column_ = column.find((column) => column.id == columnId);
-  //   if (!column_) {
-  //     return [];
-  //   }
-
-  //   return column_.items;
-  // }
-
   static async insertItem(columnId, content) {
     const data = await read();
     const column = data.find((column) => column.id == columnId);
@@ -170,31 +160,6 @@ async function getAssignmentInfo(id) {
   ).data;
 }
 
-// async function read() {
-//   const json = false;
-//   let currentBoard = [
-//     { id: 1, items: [] },
-//     { id: 2, items: [] },
-//     { id: 3, items: [] },
-//   ];
-//   let currentAssignments = [];
-
-//   let assignments = await getCourseAssignments(33808);
-//   for (const assignment of assignments.data) {
-//     const id = assignment.itemid;
-//     const data = await getAssignmentInfo(id);
-//     currentAssignments.push({
-//       id: id,
-//       content: assignment.title,
-//       instruction: data.instruction,
-//       dueTime: data.duetime,
-//     });
-//   }
-//   currentBoard[0].items.push(...currentAssignments);
-//   if (!json) return currentBoard;
-//   return JSON.parse(json);
-// }
-
 // selecting loading div
 const loader = document.querySelector("#loading");
 const loaderSelect = document.getElementById("#loading-selected");
@@ -266,8 +231,8 @@ btn.addEventListener("click", async () => {
   clearItem();
   const parentElementAll = document.querySelectorAll(".kanban__column");
   const parentElement = document.querySelectorAll(".kanban__column-items");
-  for(const parent of parentElementAll){
-    const loading = parent.querySelector('#loading');
+  for (const parent of parentElementAll) {
+    const loading = parent.querySelector("#loading");
     loading.style.display = "block";
   }
 
@@ -307,11 +272,9 @@ btn.addEventListener("click", async () => {
       assignmentInfo.duetime
     );
   }
-  
-  for(const parent of parentElementAll){
-    const loading = parent.querySelector('#loading');
+
+  for (const parent of parentElementAll) {
+    const loading = parent.querySelector("#loading");
     loading.style.display = "none";
   }
 });
-
-export { getAssignmentInfo };
