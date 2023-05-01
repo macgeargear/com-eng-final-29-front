@@ -11,6 +11,7 @@ export default class Column {
     this.elements.title = this.elements.root.querySelector(
       ".kanban__column-title"
     );
+    this.elements.loading = this.elements.root.querySelector('#loading');
     this.elements.items = this.elements.root.querySelector(
       ".kanban__column-items"
     );
@@ -20,6 +21,7 @@ export default class Column {
     this.elements.root.dataset.id = id;
     this.elements.title.textContent = title;
     this.elements.items.appendChild(topDropZone);
+    // this.elements.loading.style.visibility = "visible"
 
     this.elements.addItem.addEventListener("click", async () => {
       // TODO: add item
@@ -37,6 +39,7 @@ export default class Column {
         <div class="kanban__column">
             <div class="kanban__column-title"></div>
             <div class="kanban__column-items"></div>
+            <div id="loading"></div>
             <button class="kanban__add-item" type="button">+ Add</button>
         </div>
        `).children[0];

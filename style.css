@@ -306,11 +306,11 @@ p {
   border-top: 6px solid #de5392;
   border-radius: 100%;
   margin: auto;
-  visibility: hidden;
-  animation: spin 1s infinite linear;
+  display: none;
+  animation: spin 1s infinite linear; 
 }
 #loading.display {
-  visibility: visible;
+  display: block;
 }
 
 #loading-selected {

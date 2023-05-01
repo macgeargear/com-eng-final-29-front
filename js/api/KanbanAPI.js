@@ -229,12 +229,10 @@ function clearItem() {
 }
 
 function addRowInColumn(parentElement, id, content, instruction, dueTime) {
-  displayWhenSelect();
   const child = new Item(id, content, instruction, dueTime);
   if (String(child.elements.input.style.background) !== "rgb(17, 17, 17)") {
     parentElement.appendChild(child.elements.root);
   }
-  hideWhenSelect();
 }
 
 async function getAssignmentById(assignmentCode) {
@@ -266,6 +264,13 @@ const btn = document.getElementById("select-course");
 btn.addEventListener("click", async () => {
   const selected = document.getElementById("course-name");
   clearItem();
+  const parentElementAll = document.querySelectorAll(".kanban__column");
+  const parentElement = document.querySelectorAll(".kanban__column-items");
+  for(const parent of parentElementAll){
+    const loading = parent.querySelector('#loading');
+    loading.style.display = "block";
+  }
+
   const userId = (await getUserProfile()).user.id;
 
   let courses = await getCourseList();
@@ -275,8 +280,6 @@ btn.addEventListener("click", async () => {
   const cvcid = id.cv_cid;
 
   let assignments = await getCourseAssignments(id.cv_cid);
-
-  const parentElement = document.querySelectorAll(".kanban__column-items");
 
   for (const assignment of assignments.data) {
     const id = assignment.itemid;
@@ -303,6 +306,11 @@ btn.addEventListener("click", async () => {
       assignmentInfo.instruction,
       assignmentInfo.duetime
     );
+  }
+  
+  for(const parent of parentElementAll){
+    const loading = parent.querySelector('#loading');
+    loading.style.display = "none";
   }
 });
 
