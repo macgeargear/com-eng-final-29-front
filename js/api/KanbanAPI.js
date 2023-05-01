@@ -216,7 +216,6 @@ document.addEventListener("DOMContentLoaded", async function (event) {
   await getCourseList();
   await addCourseToDropDown();
   hideLoading();
-  // await read();
 });
 
 function clearItem() {
