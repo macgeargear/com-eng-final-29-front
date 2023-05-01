@@ -95,6 +95,10 @@ section {
   text-align: center;
 }
 
+#username {
+  font-size: 1.403534274673462835768276em;
+}
+
 .main-container {
   display: flex;
   flex-direction: column;
@@ -117,6 +121,12 @@ button {
   font-weight: bold;
   border-radius: 8px;
   border: none;
+}
+
+.summary-button:hover {
+  background-color: #ff597b;
+  color: white;
+  transition: all 0.2s ease-in-out;
 }
 
 .select-button:hover {
