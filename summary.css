@@ -5,16 +5,17 @@
   padding: 4px;
   border-radius: 8px;
   cursor: pointer;
+  font-size: 18px;
 }
 
 .summary:hover {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-.modal-summary {
+#modal-summary {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 999;
   left: 0;
   right: 0;
   top: 0;
@@ -23,6 +24,8 @@
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
 }
 .summary-container {
   width: 700px;
@@ -47,7 +50,7 @@
 }
 
 .summary-item-title {
-  margin: 12px;
+  margin: 16px;
   font-size: 18px;
 }
 

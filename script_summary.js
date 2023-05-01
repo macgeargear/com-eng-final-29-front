@@ -17,7 +17,7 @@ function _countAssignment() {
 function openModal() {
   const click = document.getElementById("summary");
   click.addEventListener("click", () => {
-    document.querySelector("#modal-summary").style.display = "block";
+    document.querySelector("#modal-summary").style.display = "flex";
     console.log("click");
     updateProgress();
   });
@@ -39,11 +39,12 @@ function updateProgress() {
   const countAssignment = _countAssignment();
   const total = countAssignment.reduce((acc, a) => acc + a, 0);
 
-  notstarted.innerHTML = Math.round((countAssignment[0] / total) * 100) + "%";
-  inprogress.innerHTML = Math.round((countAssignment[1] / total) * 100) + "%";
-  completed.innerHTML = Math.round((countAssignment[2] / total) * 100) + "%";
-  pastdue.innerHTML = 0 + "%";
+  notstarted.innerHTML = `${Math.round((countAssignment[0] / total) * 100)}%`;
+  inprogress.innerHTML = `${Math.round((countAssignment[1] / total) * 100)}%`;
+  completed.innerHTML = `${Math.round((countAssignment[2] / total) * 100)}%`;
+  pastdue.innerHTML = `${0}%`;
 }
+
 function run() {
   openModal();
   closeModal();

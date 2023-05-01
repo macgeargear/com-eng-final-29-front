@@ -54,6 +54,8 @@ section {
 
 .nav-list {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .nav-item {
