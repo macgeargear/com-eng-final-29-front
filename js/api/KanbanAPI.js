@@ -4,7 +4,6 @@ export default class KanbanAPI {
   static async getItems(columnId) {
     const column = await read();
     const column_ = column.find((column) => column.id == columnId);
-    // console.log(column_);
     if (!column_) {
       return [];
     }
@@ -35,7 +34,6 @@ export default class KanbanAPI {
       const parentElement = document.querySelectorAll(".kanban__column-items");
       for (let i = 0; i < 3; ++i) {
         for (const thisItem of Array.from(parentElement[i].children)) {
-          // console.log(thisItem.dataset.id);
           if (thisItem.dataset.id === itemId) {
             return [thisItem, i];
           }
@@ -44,8 +42,6 @@ export default class KanbanAPI {
 
       return [null, -1];
     })();
-
-    // console.log(item, currentColumn);
 
     if (!item) {
       throw new Error("Item not found.");
@@ -97,7 +93,6 @@ async function getCourseList() {
   // data.filter(course);
   for (const info of data) {
     let course_info = await getCourseInfo(info.cv_cid);
-    // console.log(course_info);
     courseList.push({
       year: course_info.data.year,
       title: course_info.data.title,
@@ -105,8 +100,6 @@ async function getCourseList() {
       cv_cid: course_info.data.cv_cid,
     });
   }
-
-  console.log(courseList);
 
   const lastYear = courseList.reduce((prev, curr) =>
     prev.year > curr.year ? prev.year : curr.year
@@ -162,7 +155,6 @@ async function getCourseInfo(cv_cid) {
     options
   );
   const data = await res.json();
-  // console.log(data);
   return data;
 }
 
@@ -176,7 +168,6 @@ async function getCourseAssignments(cv_cid) {
     options
   );
   const data = await res.json();
-  console.log(data);
   return data;
 }
 
@@ -193,22 +184,7 @@ async function getAssignmentInfo(id) {
   ).data;
 }
 
-// async function getAssignmentInfo(id) {
-//   const options = {
-//     method: "GET",
-//     credentials: "include",
-//   };
-//   const res = await fetch(
-//     `http://${backendIPAddress}/assignment/` + id,
-//     options
-//   );
-//   const data = await res.json();
-//   console.log(data);
-//   return data;
-// }
-
 async function read() {
-  // const json = localStorage.getItem("kanban-data");
   const json = false;
   let currentBoard = [
     { id: 1, items: [] },
@@ -217,7 +193,6 @@ async function read() {
   ];
   let currentAssignments = [];
 
-  // let assignments = await getCourseAssignments(32201);
   let assignments = await getCourseAssignments(33808);
   for (const assignment of assignments.data) {
     const id = assignment.itemid;
@@ -226,7 +201,6 @@ async function read() {
       id: id,
       content: assignment.title,
       instruction: data.instruction,
-      dueDate: data.duedate,
       dueTime: data.duetime,
     });
   }
@@ -256,10 +230,9 @@ function addRowInColumn(
   id,
   content,
   instruction,
-  dueDate,
   dueTime
 ) {
-  const child = new Item(id, content, instruction, dueDate, dueTime);
+  const child = new Item(id, content, instruction, dueTime);
   if (String(child.elements.input.style.background) !== "rgb(17, 17, 17)") {
     parentElement.appendChild(child.elements.root);
   }
@@ -329,7 +302,6 @@ btn.addEventListener("click", async () => {
       assignmentCode,
       content,
       assignmentInfo.instruction,
-      assignmentInfo.duedate,
       assignmentInfo.duetime
     );
   }

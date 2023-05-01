@@ -1,7 +1,7 @@
 import KanbanAPI from "../api/KanbanAPI.js";
 import DropZone from "./DropZone.js";
 export default class Item {
-  constructor(id, content, instruction, dueDate, dueTime) {
+  constructor(id, content, instruction, dueTime) {
     const bottomDropZone = DropZone.createDropZone();
 
     this.elements = {};
@@ -43,13 +43,14 @@ export default class Item {
 
     // set time
     this.elements.modalDueDate.innerHTML += this.getTime(dueTime);
-    const dayLeft = this.getDayLeft(dueDate);
+    const hourLeft = this.getHourLeft(dueTime);
+    const dayLeft = Math.floor(hourLeft / 24);
     // console.log(content, dayLeft);
     if (dayLeft > 0) {
       this.elements.modalDayLeft.innerHTML += dayLeft + " Day Left";
       this.elements.timeLeft.innerHTML += dayLeft + " Day Left";
     } else if (dayLeft == 0) {
-      const hourLeft = this.getHourLeft(dueTime);
+      // const hourLeft = this.getHourLeft(dueTime);
       this.elements.input.style.background = "#f0f4c3";
       if (hourLeft >= 1) {
         this.elements.modalDayLeft.innerHTML += hourLeft + " Hour Left";
@@ -110,20 +111,6 @@ export default class Item {
     this.elements.input.addEventListener("drop", (e) => {
       e.preventDefault();
     });
-  }
-
-  getDayLeft(dueDate) {
-    const targetDate = new Date(dueDate);
-    const today = new Date();
-
-    // Calculate the difference in milliseconds between the target date and today
-    const differenceMs = targetDate - today;
-
-    // Convert the difference to days and round down
-    const daysLeft = Math.floor(differenceMs / (1000 * 60 * 60 * 24));
-
-    // Output the number of days left
-    return daysLeft;
   }
 
   getHourLeft(dueTime) {

@@ -44,7 +44,7 @@ export default class Column {
 
   renderItem(data) {
     //TODO: create Item instance
-    const item = new Item(data.id, data.content, data.instruction, data.dueDate, data.dueTime);
+    const item = new Item(data.id, data.content, data.instruction, data.dueTime);
     // console.log(item);
     this.elements.items.appendChild(item.elements.root);
   }
