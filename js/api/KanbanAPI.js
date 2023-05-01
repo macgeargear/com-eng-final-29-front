@@ -195,12 +195,27 @@ async function getAssignmentInfo(id) {
 //   return JSON.parse(json);
 // }
 
+// selecting loading div
+const loader = document.querySelector("#loading");
+const loaderSelect = document.getElementById("#loading-selected");
+
+// TODO: showing loading
+function displayLoading() {
+  loader.classList.add("display");
+  document.querySelector(".kanban").style.display = "none";
+}
+
+// TODO: hiding loading
+function hideLoading() {
+  loader.classList.remove("display");
+  document.querySelector(".kanban").style.display = "flex";
+}
+
 document.addEventListener("DOMContentLoaded", async function (event) {
-  
+  displayLoading();
   await getCourseList();
   await addCourseToDropDown();
-  
-  // await read();
+  hideLoading();
 });
 
 function clearItem() {
@@ -213,17 +228,13 @@ function clearItem() {
   }
 }
 
-function addRowInColumn(
-  parentElement,
-  id,
-  content,
-  instruction,
-  dueTime
-) {
+function addRowInColumn(parentElement, id, content, instruction, dueTime) {
+  displayWhenSelect();
   const child = new Item(id, content, instruction, dueTime);
   if (String(child.elements.input.style.background) !== "rgb(17, 17, 17)") {
     parentElement.appendChild(child.elements.root);
   }
+  hideWhenSelect();
 }
 
 async function getAssignmentById(assignmentCode) {

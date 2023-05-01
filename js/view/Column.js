@@ -24,7 +24,7 @@ export default class Column {
     this.elements.addItem.addEventListener("click", async () => {
       // TODO: add item
       const newItem = await KanbanAPI.insertItem(id, "");
-
+      console.log(this.elements.root);
       this.renderItem(newItem);
     });
   }
