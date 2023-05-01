@@ -106,6 +106,8 @@ async function getCourseList() {
     });
   }
 
+  console.log(courseList);
+
   const lastYear = courseList.reduce((prev, curr) =>
     prev.year > curr.year ? prev.year : curr.year
   );
@@ -174,7 +176,7 @@ async function getCourseAssignments(cv_cid) {
     options
   );
   const data = await res.json();
-  // console.log(data);
+  console.log(data);
   return data;
 }
 
@@ -183,10 +185,12 @@ async function getAssignmentInfo(id) {
     method: "GET",
     credentials: "include",
   };
-  return (await fetch(
-    `http://${backendIPAddress}/courseville/get_assignment_detail/${id}`,
-    options
-  ).then((response) => response.json())).data;
+  return (
+    await fetch(
+      `http://${backendIPAddress}/courseville/get_assignment_detail/${id}`,
+      options
+    ).then((response) => response.json())
+  ).data;
 }
 
 // async function getAssignmentInfo(id) {
@@ -223,7 +227,7 @@ async function read() {
       content: assignment.title,
       instruction: data.instruction,
       dueDate: data.duedate,
-      dueTime: data.duetime
+      dueTime: data.duetime,
     });
   }
   currentBoard[0].items.push(...currentAssignments);
@@ -232,6 +236,7 @@ async function read() {
 }
 
 document.addEventListener("DOMContentLoaded", async function (event) {
+  await getCourseList();
   await addCourseToDropDown();
   await read();
 });
@@ -246,9 +251,16 @@ function clearItem() {
   }
 }
 
-function addRowInColumn(parentElement, id, content, instruction, dueDate, dueTime) {
+function addRowInColumn(
+  parentElement,
+  id,
+  content,
+  instruction,
+  dueDate,
+  dueTime
+) {
   const child = new Item(id, content, instruction, dueDate, dueTime);
-  if(String(child.elements.input.style.background) !== "rgb(17, 17, 17)"){
+  if (String(child.elements.input.style.background) !== "rgb(17, 17, 17)") {
     parentElement.appendChild(child.elements.root);
   }
 }
@@ -312,7 +324,14 @@ btn.addEventListener("click", async () => {
       };
       await postAssignment(data);
     }
-    addRowInColumn(tar, assignmentCode, content, assignmentInfo.instruction, assignmentInfo.duedate, assignmentInfo.duetime);
+    addRowInColumn(
+      tar,
+      assignmentCode,
+      content,
+      assignmentInfo.instruction,
+      assignmentInfo.duedate,
+      assignmentInfo.duetime
+    );
   }
 });
 
