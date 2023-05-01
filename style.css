@@ -35,6 +35,12 @@ section {
   right: 0;
   background-color: white;
   z-index: 999;
+  box-shadow: rgba(32, 32, 32, 0.05) 0px 16px 16px 0px,
+    rgba(42, 42, 42, 0.05) 0px 8px 8px 0px,
+    rgba(49, 49, 49, 0.05) 0px 4px 4px 0px,
+    rgba(45, 45, 45, 0.05) 0px 2px 2px 0px,
+    rgba(35, 35, 35, 0.05) 0px 64px 64px 0px,
+    rgba(49, 49, 49, 0.05) 0px 32px 32px 0px;
 }
 
 .menu-bar-wrapper.scrolled {
@@ -268,7 +274,8 @@ select {
 
 @media (max-width: 1000px) {
   .kanban {
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
   }
 }
 
@@ -307,7 +314,7 @@ p {
   border-radius: 100%;
   margin: auto;
   display: none;
-  animation: spin 1s infinite linear; 
+  animation: spin 1s infinite linear;
 }
 #loading.display {
   display: block;

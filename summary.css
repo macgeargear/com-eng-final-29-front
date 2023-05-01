@@ -35,6 +35,23 @@
   margin: 12px;
 }
 
+@media (max-width: 760px) {
+  .summary-status-all {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .summary-status-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .summary-item-title {
+    font-size: 36px;
+  }
+}
+
 .summary-title {
   border-radius: 0 0 31px 31px;
   background-color: white;
@@ -51,7 +68,8 @@
 
 .summary-item-title {
   margin: 16px;
-  font-size: 18px;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .summary-close {

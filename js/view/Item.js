@@ -33,10 +33,10 @@ export default class Item {
     this.elements.root.appendChild(bottomDropZone);
 
     // init modal
-    this.elements.input.setAttribute("id", `open-modal-${this.id}`);
-    this.elements.modal.setAttribute("id", `modal-${this.id}`);
-    this.elements.modalContent.setAttribute("id", `modal-content-${this.id}`);
-    this.elements.closeModal.setAttribute("id", `close-modal-${this.id}`);
+    this.elements.input.setAttribute("id", `open-modal-${id}`);
+    this.elements.modal.setAttribute("id", `modal-${id}`);
+    this.elements.modalContent.setAttribute("id", `modal-content-${id}`);
+    this.elements.closeModal.setAttribute("id", `close-modal-${id}`);
     this.elements.closeModal.textContent = `close`;
     this.elements.modalTitle.textContent = content;
     this.elements.modalInstruction.innerHTML = instruction;
