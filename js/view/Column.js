@@ -21,14 +21,6 @@ export default class Column {
     this.elements.root.dataset.id = id;
     this.elements.title.textContent = title;
     this.elements.items.appendChild(topDropZone);
-    // this.elements.loading.style.visibility = "visible"
-
-    // this.elements.addItem.addEventListener("click", async () => {
-    //   // TODO: add item
-    //   const newItem = await KanbanAPI.insertItem(id, "");
-    //   console.log(this.elements.root);
-    //   this.renderItem(newItem);
-    // });
   }
 
   static createRoot() {
@@ -43,19 +35,4 @@ export default class Column {
         </div>
        `).children[0];
   }
-
-  // renderItem(data) {
-  //   //TODO: create Item instance
-  //   const item = new Item(data.id, data.content, data.instruction, data.dueTime);
-  //   // console.log(item);
-  //   this.elements.items.appendChild(item.elements.root);
-  // }
-
-  // async renderItems() {
-  //   const items = await KanbanAPI.getItems(this.elements.root.dataset.id);
-  //   // console.log(items);
-  //   items.forEach((item) => {
-  //     this.renderItem(item);
-  //   });
-  // }
 }
