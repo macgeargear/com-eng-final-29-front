@@ -314,4 +314,4 @@ btn.addEventListener("click", async () => {
   }
 });
 
-export { getAssignmentInfo };
+export { getAssignmentInfo, getUserProfile };

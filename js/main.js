@@ -1,5 +1,6 @@
 import KanbanAPI from "./api/KanbanAPI.js";
 import Kanban from "./view/Kanban.js";
+import { getUserProfile } from "./api/KanbanAPI.js"
 
 const kanban = new Kanban(document.querySelector(".kanban"));
 // await kanban.renderColumns();
@@ -13,3 +14,9 @@ document.addEventListener("scroll", () => {
     header.classList.remove("scrolled");
   }
 });
+
+// display username
+const usernameBlock = document.querySelector('#username');
+const data = (await getUserProfile());
+usernameBlock.innerHTML += data.user.firstname_en + " " + data.user.lastname_en;
+
