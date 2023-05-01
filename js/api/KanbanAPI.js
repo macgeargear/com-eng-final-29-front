@@ -196,8 +196,10 @@ async function getAssignmentInfo(id) {
 // }
 
 document.addEventListener("DOMContentLoaded", async function (event) {
+  
   await getCourseList();
   await addCourseToDropDown();
+  
   // await read();
 });
 
