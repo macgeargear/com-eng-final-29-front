@@ -278,3 +278,6 @@ btn.addEventListener("click", async () => {
     loading.style.display = "none";
   }
 });
+
+
+export { getUserProfile };
