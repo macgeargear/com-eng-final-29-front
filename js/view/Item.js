@@ -40,6 +40,7 @@ export default class Item {
     this.elements.closeModal.textContent = `close`;
     this.elements.modalTitle.textContent = content;
     this.elements.modalInstruction.innerHTML = instruction;
+    this.elements.modal.style.display = "none";
 
     // set time
     this.elements.modalDueDate.innerHTML += this.getTime(dueTime);
@@ -71,37 +72,21 @@ export default class Item {
       "<br><br>" +
       `<p class="item-day-left">${this.elements.timeLeft.innerHTML}</p>`;
 
-    const onBlur = () => {
-      const newContent = this.elements.input.textContent.trim();
-
-      if (newContent == this.content) return;
-
-      this.content = newContent;
-      KanbanAPI.updateItem(id, {
-        content: this.content,
-      });
-    };
-
-    this.elements.input.addEventListener("blur", onBlur);
-    this.elements.root.addEventListener("dblclick", () => {
-      const check = confirm("Are you sure you want to delete this item?");
-      if (check) {
-        KanbanAPI.deleteItem(id);
-        this.elements.input.removeEventListener("blur", onBlur);
-        this.elements.root.parentElement.removeChild(this.elements.root);
-      }
-    });
-
     // modal
     // open
-    this.elements.input.addEventListener("click", async () => {
-      // countDown(dueDate);
+    this.elements.input.addEventListener("click", () => {
       this.elements.modal.style.display = "block";
     });
 
     // close
     this.elements.closeModal.addEventListener("click", () => {
       this.elements.modal.style.display = "none";
+    });
+    // close when click outside
+    window.addEventListener("click", (event) => {
+      if (event.target == this.elements.modal) {
+        this.elements.modal.style.display = "none";
+      }
     });
 
     this.elements.root.addEventListener("dragstart", (e) => {

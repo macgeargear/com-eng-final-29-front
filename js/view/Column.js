@@ -42,18 +42,18 @@ export default class Column {
        `).children[0];
   }
 
-  renderItem(data) {
-    //TODO: create Item instance
-    const item = new Item(data.id, data.content, data.instruction, data.dueTime);
-    // console.log(item);
-    this.elements.items.appendChild(item.elements.root);
-  }
+  // renderItem(data) {
+  //   //TODO: create Item instance
+  //   const item = new Item(data.id, data.content, data.instruction, data.dueTime);
+  //   // console.log(item);
+  //   this.elements.items.appendChild(item.elements.root);
+  // }
 
-  async renderItems() {
-    const items = await KanbanAPI.getItems(this.elements.root.dataset.id);
-    // console.log(items);
-    items.forEach((item) => {
-      this.renderItem(item);
-    });
-  }
+  // async renderItems() {
+  //   const items = await KanbanAPI.getItems(this.elements.root.dataset.id);
+  //   // console.log(items);
+  //   items.forEach((item) => {
+  //     this.renderItem(item);
+  //   });
+  // }
 }

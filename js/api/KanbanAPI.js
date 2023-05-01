@@ -1,15 +1,15 @@
 import Item from "../view/Item.js";
 
 export default class KanbanAPI {
-  static async getItems(columnId) {
-    const column = await read();
-    const column_ = column.find((column) => column.id == columnId);
-    if (!column_) {
-      return [];
-    }
+  // static async getItems(columnId) {
+  //   const column = await read();
+  //   const column_ = column.find((column) => column.id == columnId);
+  //   if (!column_) {
+  //     return [];
+  //   }
 
-    return column_.items;
-  }
+  //   return column_.items;
+  // }
 
   static async insertItem(columnId, content) {
     const data = await read();
@@ -51,20 +51,6 @@ export default class KanbanAPI {
       newProps.content === undefined ? item.content : newProps.content;
 
     updateAssignmentStatus(itemId, currentColumn);
-  }
-
-  static async deleteItem(itemId) {
-    const data = await read();
-
-    for (const column of data) {
-      const item = column.items.find((item) => item.id == itemId);
-
-      if (item) {
-        column.items.splice(column.items.indexOf(item), 1);
-      }
-    }
-
-    save(data);
   }
 }
 
@@ -184,35 +170,35 @@ async function getAssignmentInfo(id) {
   ).data;
 }
 
-async function read() {
-  const json = false;
-  let currentBoard = [
-    { id: 1, items: [] },
-    { id: 2, items: [] },
-    { id: 3, items: [] },
-  ];
-  let currentAssignments = [];
+// async function read() {
+//   const json = false;
+//   let currentBoard = [
+//     { id: 1, items: [] },
+//     { id: 2, items: [] },
+//     { id: 3, items: [] },
+//   ];
+//   let currentAssignments = [];
 
-  let assignments = await getCourseAssignments(33808);
-  for (const assignment of assignments.data) {
-    const id = assignment.itemid;
-    const data = await getAssignmentInfo(id);
-    currentAssignments.push({
-      id: id,
-      content: assignment.title,
-      instruction: data.instruction,
-      dueTime: data.duetime,
-    });
-  }
-  currentBoard[0].items.push(...currentAssignments);
-  if (!json) return currentBoard;
-  return JSON.parse(json);
-}
+//   let assignments = await getCourseAssignments(33808);
+//   for (const assignment of assignments.data) {
+//     const id = assignment.itemid;
+//     const data = await getAssignmentInfo(id);
+//     currentAssignments.push({
+//       id: id,
+//       content: assignment.title,
+//       instruction: data.instruction,
+//       dueTime: data.duetime,
+//     });
+//   }
+//   currentBoard[0].items.push(...currentAssignments);
+//   if (!json) return currentBoard;
+//   return JSON.parse(json);
+// }
 
 document.addEventListener("DOMContentLoaded", async function (event) {
   await getCourseList();
   await addCourseToDropDown();
-  await read();
+  // await read();
 });
 
 function clearItem() {
