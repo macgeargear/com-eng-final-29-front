@@ -161,6 +161,7 @@ export default class Item {
 
     return range.createContextualFragment(`
         <div class="kanban__item" draggable="true">
+       
           <div class="modal">
             <div class="modal-content">
               <div class="modal-header">
