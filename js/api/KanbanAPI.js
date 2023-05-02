@@ -178,7 +178,6 @@ function hideLoading() {
 
 document.addEventListener("DOMContentLoaded", async function (event) {
   displayLoading();
-  await getCourseList();
   await addCourseToDropDown();
   hideLoading();
 });
@@ -237,20 +236,24 @@ btn.addEventListener("click", async () => {
   }
 
   const userId = (await getUserProfile()).user.id;
+  console.log(userId);
 
   let courses = await getCourseList();
+  console.log(courses);
   let id = courses.find(
     (course) => course.title === selected.options[selected.selectedIndex].value
   );
   const cvcid = id.cv_cid;
 
   let assignments = await getCourseAssignments(id.cv_cid);
+  console.log(assignments);
 
   for (const assignment of assignments.data) {
     const id = assignment.itemid;
     const content = assignment.title;
 
-    const assignmentInfo = await getAssignmentInfo(id);
+    // const assignmentInfo = await getAssignmentInfo(id);
+    // console.log(assignmentInfo);
     const assignmentCode = [userId, String(cvcid), String(id)].join("-");
     const data = await getAssignmentById(assignmentCode);
     let tar = parentElement[0];
@@ -268,8 +271,8 @@ btn.addEventListener("click", async () => {
       tar,
       assignmentCode,
       content,
-      assignmentInfo.instruction,
-      assignmentInfo.duetime
+      assignment.instruction,
+      assignment.duetime
     );
   }
 
@@ -278,6 +281,5 @@ btn.addEventListener("click", async () => {
     loading.style.display = "none";
   }
 });
-
 
 export { getUserProfile };
