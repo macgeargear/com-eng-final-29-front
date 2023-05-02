@@ -68,12 +68,13 @@ async function getCourseList() {
   let data = (await res.json()).data.student;
   // data.filter(course);
   for (const info of data) {
-    let course_info = await getCourseInfo(info.cv_cid);
+    // let course_info = await getCourseInfo(info.cv_cid);
+    console.log(info);
     courseList.push({
-      year: course_info.data.year,
-      title: course_info.data.title,
-      semester: course_info.data.semester,
-      cv_cid: course_info.data.cv_cid,
+      year: info.year,
+      title: info.title,
+      semester: info.semester,
+      cv_cid: info.cv_cid,
     });
   }
 
